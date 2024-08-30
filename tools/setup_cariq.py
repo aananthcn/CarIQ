@@ -4,7 +4,7 @@ import json
 import subprocess
 
 def print_usage():
-    print("Usage: setup_car_iq.py <layer_json>")
+    print("Usage: setup_cariq.py <layer_json>")
     print("The <layer_json> should contain the 'layers' property with an array of dictionaries specifying 'repo', 'git', and 'branch'.")
 
 def validate_arguments():

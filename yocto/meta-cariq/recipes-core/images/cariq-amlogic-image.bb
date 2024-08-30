@@ -1,6 +1,6 @@
 DESCRIPTION = "A X11 SD/MMC Image for Amlogic Meson SoCs with embedded kernel on the filesystem"
 
-IMAGE_FEATURES += "ssh-server-openssh package-management splash x11 xfce hwcodecs"
+IMAGE_FEATURES += "ssh-server-openssh package-management splash x11 hwcodecs"
 
 IMAGE_INSTALL = "\
     packagegroup-core-boot \
@@ -12,7 +12,6 @@ IMAGE_INSTALL = "\
     linux-firmware \
     opkg \
     opkg-collateral \
-    xfce4 \
     xfce4-session \
     xfwm4 \
     xfdesktop \
@@ -22,9 +21,6 @@ IMAGE_INSTALL = "\
     xfce4-settings \
     xfce4-power-manager \
     xfce4-appfinder \
-    xfce4-goodies \
-    lightdm \
-    lightdm-gtk-greeter \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
