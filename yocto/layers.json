@@ -1,0 +1,19 @@
+{
+	"layers" : [ 
+		{
+			"repo": "meta-meson",
+			"git": "https://github.com/superna9999/meta-meson.git",
+			"branch": "master"
+		},
+		{
+			"repo": "meta-openembedded",
+			"git": "git://git.openembedded.org/meta-openembedded",
+			"branch": "master"
+		},
+		{
+			"repo": "poky",
+			"git": "git://git.yoctoproject.org/poky",
+			"branch": "master"
+		}
+	]
+}
