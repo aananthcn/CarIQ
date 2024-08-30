@@ -21,6 +21,8 @@ IMAGE_INSTALL = "\
     xfce4-settings \
     xfce4-power-manager \
     xfce4-appfinder \
+    mesa \
+    libgl \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
