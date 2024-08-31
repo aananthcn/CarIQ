@@ -30,7 +30,7 @@
 ### Compute Node
  * Insert SD card into the PC
  * Open balenaEtcher program
- * Select "amlogic-image-sato-khadas-vim3.wic.bz2" as the source
+ * Select "cariq-amlogic-image-khadas-vim3.wic" as the source
  * Choose the inserted SD card drive as the target.
  * Click flash.
 
