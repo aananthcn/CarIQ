@@ -11,7 +11,9 @@
 	* Generate locale for UTF-8 (optional)
 		* `sudo locale-gen en_US.UTF-8`
 		* `sudo update-locale LANG=en_US.UTF-8`
- * `git clone https://github.com/aananthcn/car_iq.git`
+	* Export locale env. Variables
+		* `export LC_ALL=en_US.UTF-8`
+		* `export LANG=en_US.UTF-8` * `git clone https://github.com/aananthcn/car_iq.git`
  * `cd car_iq`
  * `python tools/setup_cariq.py yocto/layers.json`
 
@@ -21,10 +23,9 @@
  * cd car_iq
  * `source yocto/poky/oe-init-build-env`
  * `bitbake cariq-amlogic-image`
- * If you face locale related issue, run this
-	* Export locale env. Variables
-		* `export LC_ALL=en_US.UTF-8`
-		* `export LANG=en_US.UTF-8`
+ * If the build is successful, you can find the SD Card Image in following path:
+	* `car_iq/build/tmp/deploy/images/khadas-vim3/cariq-amlogic-image-khadas-vim3.wic.bz2`
+
 
 ## Flashing images
 ### Compute Node
