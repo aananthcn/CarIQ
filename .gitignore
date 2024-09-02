@@ -3,8 +3,7 @@ build/downloads
 build/sstate-cache
 build/tmp
 
-yocto/meta-meson
-yocto/meta-openembedded
+yocto/meta-*
 yocto/poky
 
 *.log

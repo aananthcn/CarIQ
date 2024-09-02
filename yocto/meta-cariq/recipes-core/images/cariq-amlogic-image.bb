@@ -1,4 +1,4 @@
-DESCRIPTION = "A X11 SD/MMC Image for Amlogic Meson SoCs with embedded kernel on the filesystem"
+DESCRIPTION = "CarIQ SD Card Image for Amlogic Meson SoCs"
 
 IMAGE_FEATURES += "ssh-server-openssh package-management splash x11 hwcodecs"
 

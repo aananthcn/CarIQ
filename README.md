@@ -22,9 +22,18 @@
  ### Compute Node
  * cd car_iq
  * `source yocto/poky/oe-init-build-env`
+ * `export MACHINE="khadas-vim3"`
  * `bitbake cariq-amlogic-image`
  * If the build is successful, you can find the SD Card Image in following path:
 	* `car_iq/build/tmp/deploy/images/khadas-vim3/cariq-amlogic-image-khadas-vim3.wic.bz2`
+
+### Edge Node
+ * cd car_iq
+ * `source yocto/poky/oe-init-build-env`
+ * `export MACHINE="raspberrypi4-64"`
+ * `bitbake cariq-rpi-image`
+ * If the build is successful, you can find the SD Card Image in following path:
+	* `car_iq/build/tmp/deploy/images/raspberrypi4-64/cariq-rpi-image-raspberrypi4-64.rootfs.wic.bz2`
 
 
 ## Flashing images
