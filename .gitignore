@@ -3,8 +3,12 @@ build/downloads
 build/sstate-cache
 build/tmp
 
-yocto/meta-*
+# Ignore these yocto layers
 yocto/poky
+yocto/meta-*
+
+# But do not ignore these yocto layers
+!meta-cariq
 
 *.log
 .vscode

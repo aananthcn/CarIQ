@@ -12,19 +12,17 @@ IMAGE_INSTALL = "\
     linux-firmware \
     opkg \
     opkg-collateral \
-    xfce4-session \
-    xfwm4 \
-    xfdesktop \
-    xfce4-panel \
-    xfce4-terminal \
-    thunar \
-    xfce4-settings \
-    xfce4-power-manager \
-    xfce4-appfinder \
+    packagegroup-xfce-base \
     mesa \
     libgl \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
+
+# Adding network manager for Edge Node
+IMAGE_INSTALL += "networkmanager network-manager-applet"
+
+# systemd is used as init manager for all nodes
+IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 
 # 4G Rootfs
 IMAGE_ROOTFS_SIZE = "4194304"
