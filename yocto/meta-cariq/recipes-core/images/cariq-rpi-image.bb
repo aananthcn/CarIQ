@@ -11,13 +11,16 @@ IMAGE_INSTALL = "\
     kernel-image \
     kernel-modules \
     kernel-devicetree \
-    linux-firmware \
     opkg \
     opkg-collateral \
     packagegroup-xfce-base \
     mesa \
     libgl \
+    packagegroup-basic \
+    packagegroup-base \
+    lshw \
     ${CORE_IMAGE_EXTRA_INSTALL} \
+    ${MACHINE_EXTRA_RRECOMMENDS} \
     "
 
 # Adding network manager for Edge Node
@@ -26,7 +29,8 @@ IMAGE_INSTALL += "networkmanager network-manager-applet"
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 
-
+# WiF in RPis won't work if generic linux-firmware is used, hence MACHINE_EXTRA_RRECOMMENDS include special bins
+IMAGE_INSTALL:remove = "linux-firmware"
 
 # 4G Rootfs
 IMAGE_ROOTFS_SIZE = "4194304"

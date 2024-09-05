@@ -1,5 +1,7 @@
 DESCRIPTION = "CarIQ SD Card Image for Amlogic Meson SoCs"
 
+COMPATIBLE_MACHINE = "^khadas-vim$"
+
 IMAGE_FEATURES += "ssh-server-openssh package-management splash x11 hwcodecs"
 
 IMAGE_INSTALL = "\
@@ -15,6 +17,9 @@ IMAGE_INSTALL = "\
     packagegroup-xfce-base \
     mesa \
     libgl \
+    packagegroup-basic \
+    packagegroup-base \
+    lshw \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
