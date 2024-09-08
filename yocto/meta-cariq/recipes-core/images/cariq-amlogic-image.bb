@@ -29,6 +29,9 @@ IMAGE_INSTALL += "networkmanager network-manager-applet"
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 
+# for camera streaming
+IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-good"
+
 # 4G Rootfs
 IMAGE_ROOTFS_SIZE = "4194304"
 

@@ -19,6 +19,8 @@ IMAGE_INSTALL = "\
     packagegroup-basic \
     packagegroup-base \
     lshw \
+    opencv \
+    ffmpeg \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     ${MACHINE_EXTRA_RRECOMMENDS} \
     "
@@ -29,7 +31,12 @@ IMAGE_INSTALL += "networkmanager network-manager-applet"
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 
-# WiF in RPis won't work if generic linux-firmware is used, hence MACHINE_EXTRA_RRECOMMENDS include special bins
+# for camera streaming
+IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base \
+        gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-libav \
+        v4l-utils "
+
+# WiFi in RPis won't work if generic linux-firmware is used, hence MACHINE_EXTRA_RRECOMMENDS include special bins
 IMAGE_INSTALL:remove = "linux-firmware"
 
 # 4G Rootfs
