@@ -1,0 +1,7 @@
+VIDEO_CAMERA = "1"
+GPU_MEM = "128"
+
+# ENABLE_SPI_BUS = "1"
+# ENABLE_I2C = "1"
+# ENABLE_UART = "1"
+
