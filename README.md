@@ -14,29 +14,29 @@
 	* Export locale env. Variables
 		* `export LC_ALL=en_US.UTF-8`
 		* `export LANG=en_US.UTF-8`
- * `git clone https://github.com/aananthcn/car_iq.git`
- * `cd car_iq`
+ * `git clone https://github.com/aananthcn/CarIQ.git`
+ * `cd CarIQ`
  * `python tools/setup_cariq.py yocto/layers.json`
 
 
  ## Build images
  ### Central Compute Node
- * cd car_iq
+ * `cd CarIQ`
  * `source yocto/poky/oe-init-build-env`
  * `export MACHINE="khadas-vim3"`
  * `bitbake cariq-ccn-image`
  * If the build is successful, you can find the SD Card Image in following path:
-	* `car_iq/build/tmp/deploy/images/khadas-vim3/cariq-ccn-image-khadas-vim3.wic.bz2`
+	* `CarIQ/build/tmp/deploy/images/khadas-vim3/cariq-ccn-image-khadas-vim3.wic.bz2`
 
 ### Edge Node 1 & 2
- * cd car_iq
+ * `cd CarIQ`
  * `source yocto/poky/oe-init-build-env`
  * `export MACHINE="raspberrypi4-64"`
  * `bitbake cariq-en1-image`
  * `bitbake cariq-en2-image`
  * If the build(s) are successful, you can find the SD Card Image in following path:
-	* `car_iq/build/tmp/deploy/images/raspberrypi4-64/cariq-en1-image-raspberrypi4-64.rootfs.wic.bz2`
-	* `car_iq/build/tmp/deploy/images/raspberrypi4-64/cariq-en2-image-raspberrypi4-64.rootfs.wic.bz2`
+	* `CarIQ/build/tmp/deploy/images/raspberrypi4-64/cariq-en1-image-raspberrypi4-64.rootfs.wic.bz2`
+	* `CarIQ/build/tmp/deploy/images/raspberrypi4-64/cariq-en2-image-raspberrypi4-64.rootfs.wic.bz2`
 
 
 ## Flashing images
