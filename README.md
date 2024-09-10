@@ -13,7 +13,8 @@
 		* `sudo update-locale LANG=en_US.UTF-8`
 	* Export locale env. Variables
 		* `export LC_ALL=en_US.UTF-8`
-		* `export LANG=en_US.UTF-8` * `git clone https://github.com/aananthcn/car_iq.git`
+		* `export LANG=en_US.UTF-8`
+ * `git clone https://github.com/aananthcn/car_iq.git`
  * `cd car_iq`
  * `python tools/setup_cariq.py yocto/layers.json`
 
