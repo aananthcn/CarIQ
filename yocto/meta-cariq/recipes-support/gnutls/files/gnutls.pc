@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: GnuTLS
+Description: GnuTLS library
+Version: 3.8.6
+Libs: -L${libdir} -lgnutls
+Cflags: -I${includedir}
