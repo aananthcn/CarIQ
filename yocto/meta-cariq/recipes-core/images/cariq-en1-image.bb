@@ -3,9 +3,6 @@ DESCRIPTION = "CarIQ SD Card Image for Raspberry Pi Boards"
 COMPATIBLE_MACHINE = "^rpi$"
 
 
-# The text (Edge Node 1) used here will be used as id in NetworkManager.conf file
-CCARIQ_NODE = "en1"
-
 # Define the function to write the cariq_node.txt file
 python() {
     import os
@@ -13,6 +10,13 @@ python() {
     # Define the file path where the cariq_node.txt will be created
     tmpdir = d.getVar('TMPDIR', True)
     file_path = os.path.join(tmpdir, 'cariq_node.txt')
+
+    # Delete the file if it exists
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except Exception as e:
+            bb.fatal("Failed to delete existing file %s: %s" % (file_path, str(e)))
 
     # Set the CARIQ_NODE value
     cariq_node = "en1"
