@@ -58,6 +58,7 @@ IMAGE_INSTALL = "\
     lshw \
     opencv \
     ffmpeg \
+    socat \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     ${MACHINE_EXTRA_RRECOMMENDS} \
     "
@@ -70,8 +71,8 @@ IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 
 # for camera streaming
 IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base \
-        gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-libav \
-        v4l-utils "
+        gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
+        gstreamer1.0-libav v4l-utils libsdl2"
 
 # WiFi in RPis won't work if generic linux-firmware is used, hence MACHINE_EXTRA_RRECOMMENDS include special bins
 IMAGE_INSTALL:remove = "linux-firmware"
