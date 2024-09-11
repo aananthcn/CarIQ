@@ -72,7 +72,8 @@ IMAGE_INSTALL:append = " systemd systemd-analyze systemd-serialgetty"
 # for camera streaming
 IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
-        gstreamer1.0-libav v4l-utils libsdl2"
+        gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
+        gstreamer1.0-python v4l-utils libsdl2"
 
 
 # 4G Rootfs
