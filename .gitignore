@@ -1,7 +1,7 @@
-build/cache
-build/downloads
-build/sstate-cache
-build/tmp
+downloads
+sstate-cache
+tmp
+cache
 
 # Ignore these yocto layers
 yocto/poky
@@ -11,4 +11,5 @@ yocto/meta-*
 !meta-cariq
 
 *.log
+*.lock
 .vscode
