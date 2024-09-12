@@ -23,7 +23,6 @@
  ### Central Compute Node
  * `cd CarIQ/build-vim`
  * `source ../yocto/poky/oe-init-build-env .`
- * `export MACHINE="khadas-vim3"`
  * `bitbake cariq-ccn-image`
  * If the build is successful, you can find the SD Card Image in following path:
 	* `CarIQ/build-vim/tmp/deploy/images/khadas-vim3/cariq-ccn-image-khadas-vim3.wic.bz2`
@@ -31,7 +30,6 @@
 ### Edge Node 1 & 2
  * `cd CarIQ/build-rpi`
  * `source ../yocto/poky/oe-init-build-env .`
- * `export MACHINE="raspberrypi4-64"`
  * `bitbake cariq-en1-image`
  * `bitbake cariq-en2-image`
  * If the build(s) are successful, you can find the SD Card Image in following path:

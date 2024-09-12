@@ -1,0 +1,10 @@
+[Unit]
+Description=Camera player socket for ports 5001 and 5002
+
+[Socket]
+ListenDatagram=5001
+ListenDatagram=5002
+BindIPv6Only=both
+
+[Install]
+WantedBy=sockets.target

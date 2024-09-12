@@ -75,6 +75,9 @@ IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
         gstreamer1.0-python v4l-utils libsdl2"
 
+# CarIQ Apps
+IMAGE_INSTALL += " camera-streamer"
+
 
 # 4G Rootfs
 IMAGE_ROOTFS_SIZE = "4194304"

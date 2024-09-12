@@ -1,0 +1,10 @@
+[Unit]
+Description=Camera player service for port %i
+Requires=camera-player.socket
+
+[Service]
+ExecStart=/usr/bin/camera-player.sh %i
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

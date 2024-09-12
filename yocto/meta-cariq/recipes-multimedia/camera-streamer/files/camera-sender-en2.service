@@ -1,0 +1,12 @@
+[Unit]
+Description=Camera Sender Service (PORT 5002)
+After=network.target
+
+[Service]
+# Wait until /dev/video0 exists before starting the service
+ExecStartPre=/bin/sh -c 'while [ ! -e /dev/video0 ]; do sleep 0.5; done'
+ExecStart=/usr/bin/camera-sender.sh 5002
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
