@@ -2,6 +2,7 @@ downloads
 sstate-cache
 tmp
 cache
+build
 
 # Ignore these yocto layers
 yocto/poky
