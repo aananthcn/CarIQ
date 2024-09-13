@@ -9,6 +9,10 @@ fi
 # Assign the first argument to PORT variable
 PORT=$1
 
+# Always use the first display
+sleep 5
+export DISPLAY=:0
+
 # Validate if the argument is a valid number
 if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
     echo "Error: Port number must be a valid number"

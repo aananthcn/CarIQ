@@ -1,0 +1,11 @@
+[Unit]
+Description=Camera player service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/camera-udp-listener
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical.target
