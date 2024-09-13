@@ -19,7 +19,7 @@ fi
 echo "Starting camera sender to stream camera via port $PORT..."
 
 # Your camera player logic here, for example:
-gst-launch-1.0 v4l2src ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=192.168.10.100 port=${PORT}
+gst-launch-1.0 v4l2src ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=192.168.10.100 port=${PORT} sync=false max-lateness=80
 
 # Example placeholder command for testing:
 echo "Camera sender running on port $PORT"
