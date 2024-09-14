@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <errno.h>
 
+
 // List of UDP ports to listen to
 static const int udp_ports[] = {5001, 5002};
 #define PORT_COUNT (sizeof(udp_ports) / sizeof(udp_ports[0]))
@@ -21,7 +22,7 @@ typedef struct {
 
 
 // Function to handle incoming packets
-void handle_packet(int port) {
+void spawn_cam_player(int port) {
     pid_t pid = fork();
     if (pid == -1) {
         perror("fork failed");
@@ -29,7 +30,7 @@ void handle_packet(int port) {
     }
 
     if (pid == 0) {
-        // Child process
+        // Child process - spawn camera-player app to handle the UDP stream
         char port_str[6];
         snprintf(port_str, sizeof(port_str), "%d", port);
         execlp("/usr/bin/camera-player", "camera-player", port_str, (char *)NULL);
@@ -42,6 +43,7 @@ void handle_packet(int port) {
         waitpid(pid, &status, 0); // Wait for child to finish
     }
 }
+
 
 // Thread function to listen for incoming packets
 void* listen_on_port(void* args) {
@@ -62,10 +64,12 @@ void* listen_on_port(void* args) {
 
         // Packet received, handle it
         close(sockfd);
-        handle_packet(port);
+        usleep(5000); // give control to OS so that it actually closes
+        spawn_cam_player(port);
         pthread_exit(NULL);
     }
 }
+
 
 int main() {
     pthread_t threads[PORT_COUNT];

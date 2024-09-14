@@ -9,15 +9,26 @@ fi
 # Assign the first argument to PORT variable
 PORT=$1
 
-# Always use the first display
-sleep 5
-export DISPLAY=:0
-
 # Validate if the argument is a valid number
 if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
     echo "Error: Port number must be a valid number"
     exit 1
 fi
+
+# Wait for XFCE4 GDM to come up in Linux
+while true; do
+    if pgrep -x "xfwm4" > /dev/null; then
+        echo "X11 is running."
+        break
+    else
+        echo "Waiting for X11 to start..."
+        # Sleep for 100 milliseconds (0.1 seconds)
+        sleep 0.1
+    fi
+done
+
+# Always use the first display
+export DISPLAY=:0
 
 # Start the camera player with the provided port number
 echo "Starting camera player on port $PORT..."
