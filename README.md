@@ -3,7 +3,7 @@
 
 
 # Getting Started
-## Setting up the machine
+## Setting up the build-machine (one-time)
  * Use Ubuntu 22.04 machine
  * Install the following packages for Yocto
 	* `sudo apt install build-essential python3 python3-pip python3-pexpect python3-git python3-jinja2 python3-subunit git locales chrpath cpio wget diffstat gawk gcc-multilib g++-multilib bison flex texinfo unzip zip bzip2 libncurses5-dev libncursesw5-dev zlib1g-dev bmap-tools mtools dosfstools parted syslinux-common libsdl1.2-dev xterm libgl1-mesa-dev gdb-multiarch strace lzop lz4`
