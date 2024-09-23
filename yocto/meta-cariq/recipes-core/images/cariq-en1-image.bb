@@ -63,6 +63,10 @@ IMAGE_INSTALL = "\
     ${MACHINE_EXTRA_RRECOMMENDS} \
     "
 
+
+# Development tools or utils
+IMAGE_INSTALL += " glibc"
+
 # Adding network manager for Edge Node
 IMAGE_INSTALL += "networkmanager network-manager-applet"
 

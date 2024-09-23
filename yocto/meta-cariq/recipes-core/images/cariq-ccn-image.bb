@@ -63,7 +63,11 @@ IMAGE_INSTALL = "\
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
-# Adding network manager for Edge Node
+
+# Development tools or utils
+IMAGE_INSTALL += " glibc"
+
+# Adding network manager for Compute Node
 IMAGE_INSTALL += "networkmanager network-manager-applet"
 
 # systemd is used as init manager for all nodes
