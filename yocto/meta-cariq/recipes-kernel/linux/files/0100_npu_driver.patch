@@ -1,0 +1,16 @@
+
+Upstream-Status: Inappropriate [Custom patch for Khadas VIM3]
+
+
+diff --git a/drivers/npu/Kbuild b/drivers/npu/Kbuild
+index c2afe6f5c..8b4a94bf4 100755
+--- a/drivers/npu/Kbuild
++++ b/drivers/npu/Kbuild
+@@ -56,7 +56,7 @@
+ #
+ # Linux build file for kernel HAL driver.
+ #
+-AQROOT = common_drivers/drivers/npu
++#AQROOT = common_drivers/drivers/npu
+
+ include $(AQROOT)/config
