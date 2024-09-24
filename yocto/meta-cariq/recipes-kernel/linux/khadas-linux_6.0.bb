@@ -99,16 +99,6 @@ KERNEL_DANGLING_FEATURES_WARN_ONLY = "1"
 KCONF_AUDIT_LEVEL = "1"
 
 
-# do_patch() {
-#     # go to src directory: tmp/work-shared/khadas-vim3/kernel-source
-#     cd ${S}
-    
-#     # Loop through all patch files in the patches directory
-#     for patch in ${WORKDIR}/sources-unpack/*.patch; do
-#         echo "Applying patch: $patch"
-#         patch -p1 < "$patch"
-#     done
-# }
 do_patch() {
     # Go to src directory: tmp/work-shared/khadas-vim3/kernel-source
     cd ${S}
