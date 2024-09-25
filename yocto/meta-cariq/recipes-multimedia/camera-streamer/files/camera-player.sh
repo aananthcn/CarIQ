@@ -27,6 +27,9 @@ while true; do
     fi
 done
 
+# Allow 1 second for the display to be available
+sleep 1
+
 # Always use the first display
 export DISPLAY=:0
 

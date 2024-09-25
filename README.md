@@ -21,20 +21,20 @@
 
  ## Build images
  ### Central Compute Node
- * `cd CarIQ/build-vim`
+ * `cd CarIQ/build-ccn`
  * `source ../yocto/poky/oe-init-build-env .`
  * `bitbake cariq-ccn-image`
  * If the build is successful, you can find the SD Card Image in following path:
-	* `CarIQ/build-vim/tmp/deploy/images/khadas-vim3/cariq-ccn-image-khadas-vim3.wic.bz2`
+	* `CarIQ/build-ccn/tmp/deploy/images/khadas-vim3/cariq-ccn-image-khadas-vim3.wic.bz2`
 
-### Edge Node 1 & 2
- * `cd CarIQ/build-rpi`
+### Edge Node X (where, X = 1, 2)
+ * `cd CarIQ/build-enX`
  * `source ../yocto/poky/oe-init-build-env .`
  * `bitbake cariq-en1-image`
  * `bitbake cariq-en2-image`
  * If the build(s) are successful, you can find the SD Card Image in following path:
-	* `CarIQ/build-rpi/tmp/deploy/images/raspberrypi5/cariq-en1-image-raspberrypi5.rootfs.wic.bz2`
-	* `CarIQ/build-rpi/tmp/deploy/images/raspberrypi5/cariq-en2-image-raspberrypi5.rootfs.wic.bz2`
+	* `CarIQ/build-enX/tmp/deploy/images/raspberrypi5/cariq-en1-image-raspberrypi5.rootfs.wic.bz2`
+	* `CarIQ/build-enX/tmp/deploy/images/raspberrypi5/cariq-en2-image-raspberrypi5.rootfs.wic.bz2`
 
 
 ## Flashing images

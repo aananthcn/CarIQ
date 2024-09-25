@@ -1,3 +1,4 @@
+COMPATIBLE_MACHINE = "^khadas-vim3$"
 
 # Append required kernel configuration options
 do_configure:append() {
