@@ -50,7 +50,7 @@ void* listen_on_port(void* args) {
     ThreadArgs* thread_args = (ThreadArgs*)args;
     int sockfd = thread_args->sockfd;
     int port = thread_args->port;
-    char buffer[1024];
+    char buffer[8192]; // Have large size buffer to handle camera stream
     struct sockaddr_in cliaddr;
     socklen_t len = sizeof(cliaddr);
 
@@ -64,9 +64,14 @@ void* listen_on_port(void* args) {
 
         // Packet received, handle it
         close(sockfd);
-        usleep(5000); // give control to OS so that it actually closes
+
+        // Sleep to ensure socket closure propagates properly
+        usleep(100000); // 100 ms
+
+        // Spawn the camera-player process
         spawn_cam_player(port);
-        pthread_exit(NULL);
+
+        pthread_exit(NULL);  // Exit the thread after handling the first packet
     }
 }
 

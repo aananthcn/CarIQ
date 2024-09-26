@@ -33,8 +33,8 @@
  * `bitbake cariq-en1-image`
  * `bitbake cariq-en2-image`
  * If the build(s) are successful, you can find the SD Card Image in following path:
-	* `CarIQ/build-enX/tmp/deploy/images/raspberrypi5/cariq-en1-image-raspberrypi5.rootfs.wic.bz2`
-	* `CarIQ/build-enX/tmp/deploy/images/raspberrypi5/cariq-en2-image-raspberrypi5.rootfs.wic.bz2`
+	* `CarIQ/build-en1/tmp/deploy/images/raspberrypi5/cariq-en1-image-raspberrypi5.rootfs.wic.bz2`
+	* `CarIQ/build-en2/tmp/deploy/images/raspberrypi5/cariq-en2-image-raspberrypi5.rootfs.wic.bz2`
 
 
 ## Flashing images
