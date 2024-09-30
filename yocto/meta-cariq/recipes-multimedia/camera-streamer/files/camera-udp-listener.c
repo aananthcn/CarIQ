@@ -64,6 +64,7 @@ void* listen_on_port(void* args) {
 
         // Packet received, handle it
         close(sockfd);
+        printf("Camera Listener: closing port %d\n", port);
 
         // Sleep to ensure socket closure propagates properly
         usleep(100000); // 100 ms
@@ -80,6 +81,7 @@ int main() {
     pthread_t threads[PORT_COUNT];
     ThreadArgs thread_args[PORT_COUNT];
     struct sockaddr_in servaddr;
+    int port;
 
     // Initialize sockets and create threads
     for (int i = 0; i < PORT_COUNT; i++) {
@@ -92,15 +94,17 @@ int main() {
         memset(&servaddr, 0, sizeof(servaddr));
         servaddr.sin_family = AF_INET;
         servaddr.sin_addr.s_addr = INADDR_ANY;
-        servaddr.sin_port = htons(udp_ports[i]);
+        port = udp_ports[i];
+        servaddr.sin_port = htons(port);
 
+        printf("Camera Listener: binding port %d\n", port);
         if (bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
             perror("bind failed");
             close(sockfd);
             exit(EXIT_FAILURE);
         }
 
-        thread_args[i].port = udp_ports[i];
+        thread_args[i].port = port;
         thread_args[i].sockfd = sockfd;
 
         if (pthread_create(&threads[i], NULL, listen_on_port, &thread_args[i]) != 0) {

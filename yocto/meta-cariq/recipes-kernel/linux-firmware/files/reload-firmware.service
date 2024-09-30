@@ -1,0 +1,11 @@
+[Unit]
+Description=Reload brcmfmac (wifi driver & brcmfmac4359-sdio.bin) after boot.
+After=wpa_supplicant.service
+Requires=wpa_supplicant.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'sleep 10 && modprobe -r brcmfmac && modprobe brcmfmac'
+
+[Install]
+WantedBy=multi-user.target

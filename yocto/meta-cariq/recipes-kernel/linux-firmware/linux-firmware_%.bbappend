@@ -1,0 +1,32 @@
+DESCRIPTION = "A workaround for fixing the WiFi issue for Khadas VIM3"
+AUTHOR = "Aananth C N"
+
+#LICENSE = "GPL-2.0-only"
+
+COMPATIBLE_MACHINE = "^khadas-vim3$"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI += "file://reload-firmware.service"
+
+inherit systemd
+
+
+# S = "${WORKDIR}/sources"
+# UNPACKDIR = "${S}"
+
+
+do_install:append() {
+    install -d ${D}${systemd_system_unitdir}
+
+    install -d ${D}${base_libdir}/firmware/brcm
+    ln -sf brcmfmac4359-sdio.bin ${D}${base_libdir}/firmware/brcm/brcmfmac4359-sdio.khadas,vim3.bin
+
+    install -m 0644 ${UNPACKDIR}/reload-firmware.service ${D}${systemd_system_unitdir}/reload-firmware.service
+}
+
+
+# To auto enable the services so that it goes inside /etc/systemd/system/multi-user.target.wants/
+SYSTEMD_SERVICE:${PN} = "reload-firmware.service"
+
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"

@@ -89,6 +89,10 @@ SRC_URI += "file://0067-fix-amlogic-npu-build-issue.patch"
 SRC_URI += "file://0068-FROMGIT-5.18-arm64-dts-meson-sm1-add-spdifin-spdifou.patch"
 SRC_URI += "file://0069-add-overlay-compilation-support.patch"
 SRC_URI += "file://0070-VIMs-add-device-tree-overlays.patch"
+
+SRC_URI += "file://0080-broadcom_diff_v6.0_to_v6.11.patch"
+
+# SRC_URI += "file://0080-VIM3_wifi_hack.patch"
 # SRC_URI += "file://0100_npu_driver.patch"
 
 
