@@ -38,22 +38,48 @@ void spawn_cam_player(int port) {
         perror("execlp failed");
         exit(EXIT_FAILURE);
     } else {
-        // Parent process: wait for the child to terminate
-        int status;
-        waitpid(pid, &status, 0); // Wait for child to finish
+        printf("%s: camera-player for port %d is spawned!\n", __func__, port);
     }
 }
 
 
 // Thread function to listen for incoming packets
-void* listen_on_port(void* args) {
-    ThreadArgs* thread_args = (ThreadArgs*)args;
-    int sockfd = thread_args->sockfd;
-    int port = thread_args->port;
+void* listen_on_port(void* arg) {
     char buffer[8192]; // Have large size buffer to handle camera stream
     struct sockaddr_in cliaddr;
     socklen_t len = sizeof(cliaddr);
+    int port = *(int*)arg;
 
+    // Create and bind socket here
+    int sockfd;
+    struct sockaddr_in servaddr;
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd < 0) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Allow immediate reuse of the address and port
+    int opt = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+        perror("setsockopt(SO_REUSEADDR) failed");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }
+
+    // initialize addr, port and bind
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = INADDR_ANY;
+    servaddr.sin_port = htons(port);
+
+    if (bind(sockfd, (const struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
+        perror("Bind failed");
+        printf("Bing failed for port: %d\n", port);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%s: waiting for UDP message for port %d\n", __func__, port);
     while (1) {
         int n = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&cliaddr, &len);
         if (n < 0) {
@@ -64,7 +90,7 @@ void* listen_on_port(void* args) {
 
         // Packet received, handle it
         close(sockfd);
-        printf("Camera Listener: closing port %d\n", port);
+        printf("Camera Listener: message received! Closing port %d\n", port);
 
         // Sleep to ensure socket closure propagates properly
         usleep(100000); // 100 ms
@@ -72,6 +98,7 @@ void* listen_on_port(void* args) {
         // Spawn the camera-player process
         spawn_cam_player(port);
 
+        // Execution will reach here only if child process is killed
         pthread_exit(NULL);  // Exit the thread after handling the first packet
     }
 }
@@ -79,37 +106,11 @@ void* listen_on_port(void* args) {
 
 int main() {
     pthread_t threads[PORT_COUNT];
-    ThreadArgs thread_args[PORT_COUNT];
-    struct sockaddr_in servaddr;
-    int port;
 
     // Initialize sockets and create threads
     for (int i = 0; i < PORT_COUNT; i++) {
-        int sockfd;
-        if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-            perror("socket creation failed");
-            exit(EXIT_FAILURE);
-        }
-
-        memset(&servaddr, 0, sizeof(servaddr));
-        servaddr.sin_family = AF_INET;
-        servaddr.sin_addr.s_addr = INADDR_ANY;
-        port = udp_ports[i];
-        servaddr.sin_port = htons(port);
-
-        printf("Camera Listener: binding port %d\n", port);
-        if (bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
-            perror("bind failed");
-            close(sockfd);
-            exit(EXIT_FAILURE);
-        }
-
-        thread_args[i].port = port;
-        thread_args[i].sockfd = sockfd;
-
-        if (pthread_create(&threads[i], NULL, listen_on_port, &thread_args[i]) != 0) {
+        if (pthread_create(&threads[i], NULL, listen_on_port, (void*)&udp_ports[i]) != 0) {
             perror("pthread_create failed");
-            close(sockfd);
             exit(EXIT_FAILURE);
         }
     }
