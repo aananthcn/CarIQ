@@ -45,8 +45,11 @@ IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base \
 # Python stuffs
 IMAGE_INSTALL:append = " python3 python-is-python3"
 
+# for image processing
+IMAGE_INSTALL:append = " jpeg"
+
 # CarIQ Apps
-IMAGE_INSTALL += " camera-streamer lane-detect-opencv"
+IMAGE_INSTALL += " camera-streamer lane-detect-opencv npu-tests"
 
 
 # 4G Rootfs
