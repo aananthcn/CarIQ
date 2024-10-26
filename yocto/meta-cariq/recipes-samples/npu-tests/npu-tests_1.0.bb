@@ -28,6 +28,10 @@ do_compile() {
     cd ${S}/DDK_6.3.3.4/detect_library/model_code/detect_yolov8n
     oe_runmake -f makefile.linux CC="${CC}" CXX="${CXX}"
 
+    # build libnn_yoloface.so
+    cd ${S}/DDK_6.3.3.4/detect_library/model_code/detect_yoloface
+    oe_runmake -f makefile.linux CC="${CC}" CXX="${CXX}"
+
     # # build sample_demo_x11
     # cd ${S}/detect_library/sample_demo_x11
     # oe_runmake -f makefile.linux CC="${CC}" CXX="${CXX}" -I${OPENCV_INCLUDE_DIR}
@@ -41,13 +45,20 @@ do_install() {
     install -d ${D}${libdir}
     install -d ${D}${bindir}
 
+    # build libnn_detect.so
     cd ${S}/detect_library/source_code
     install -m 0755 bin_r/libnn_detect.so ${D}${libdir}/libnn_detect.so.1.0
     ln -sf libnn_detect.so.1.0 ${D}${libdir}/libnn_detect.so
 
+    # build libnn_yolo_v8n.so
     cd ${S}/DDK_6.3.3.4/detect_library/model_code/detect_yolov8n
     install -m 0755 bin_r/libnn_yolo_v8n.so ${D}${libdir}/libnn_yolo_v8n.so.1.0
     ln -sf libnn_yolo_v8n.so.1.0 ${D}${libdir}/libnn_yolo_v8n.so
+
+    # build libnn_yoloface.so
+    cd ${S}/DDK_6.3.3.4/detect_library/model_code/detect_yoloface
+    install -m 0755 bin_r/libnn_yoloface.so ${D}${libdir}/libnn_yoloface.so.1.0
+    ln -sf libnn_yoloface.so.1.0 ${D}${libdir}/libnn_yoloface.so
 
     # cd ${S}/detect_library/sample_demo_x11
     # install -m 0755 bin_r/detect_demo_x11 ${D}${bindir}/detect_demo_x11

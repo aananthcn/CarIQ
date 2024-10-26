@@ -3,6 +3,8 @@ sstate-cache
 tmp
 cache
 build
+pn-buildlist
+task-depends.dot
 
 # Ignore these yocto layers
 yocto/poky
