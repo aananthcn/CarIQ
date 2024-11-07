@@ -6,9 +6,9 @@ LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=5d3ea8a85f5d129b7481fd47a4511dba"
 
 SRC_URI = "git://github.com/aananthcn/npu_sdk_a311d.git;branch=main;protocol=https"
+SRCREV = "6.0.0"
 SRC_URI[sha256sum] = "3765c7dcd665c065515669149f2ca7ce1b43d0c52fd2bdd8780b8729dd92342b"
 
-SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
@@ -34,9 +34,10 @@ INSANE_SKIP:${PN} = "dev-so ldflags staticdev"
 
 # Ensure the following libraries are assigned to the main package
 FILES:${PN} += "${libdir}/libovxlib.so \
+                ${libdir}/libCLC.so \
+                ${libdir}/libVSC.so \
                 ${libdir}/libVSC_Lite.so \
                 ${libdir}/libNNArchPerf.so \
-                ${libdir}/libnndemo.so \
                 ${libdir}/libOpenVX.so \
                 ${libdir}/libGAL.so \
                 ${libdir}/libOpenVXU.so \

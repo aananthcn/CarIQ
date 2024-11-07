@@ -25,6 +25,8 @@ IMAGE_INSTALL = "\
     ${MACHINE_EXTRA_RRECOMMENDS} \
     "
 
+# Infrastructure components
+IMAGE_INSTALL += " pkgconf"
 
 # Adding network manager for Edge Node
 IMAGE_INSTALL += "networkmanager network-manager-applet"
@@ -38,14 +40,16 @@ IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
         gstreamer1.0-python v4l-utils libsdl2"
 
+# for image processing, display libraries
+IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
+
 # CarIQ Apps
 IMAGE_INSTALL += " camera-streamer"
 
-# for image processing, display libraries
-IMAGE_INSTALL += " jpeg opencv gtk+3 gobject-introspection"
-
 # Python stuffs
-IMAGE_INSTALL += " python3 python-is-python3 python3-pygobject"
+IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
+        python-is-python3 pip-is-pip3 \
+        moviepy"
 
 
 # Development tools or utils

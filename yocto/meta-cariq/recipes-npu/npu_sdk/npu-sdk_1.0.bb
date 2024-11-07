@@ -1,5 +1,3 @@
-# File: ../meta-cariq/recipes-npu/npu_sdk_a311d_1.0.bb
-
 DESCRIPTION = "NPU SDK for A311D - for development"
 
 LICENSE = "CLOSED"
