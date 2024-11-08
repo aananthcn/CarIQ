@@ -44,7 +44,7 @@ IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
 IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
 
 # CarIQ Apps
-IMAGE_INSTALL += " camera-streamer lane-detect-opencv"
+IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11"
 
 # Python stuffs
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
