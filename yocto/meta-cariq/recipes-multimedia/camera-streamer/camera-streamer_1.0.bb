@@ -10,16 +10,12 @@ SRC_URI = "file://camera-sender.sh \
            file://camera-udp-listener.c \
 "
 
-
 inherit systemd
-
-
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
 
 
 # Compile the C file
 do_compile() {
+    cd ${WORKDIR}
     ${CC} ${CFLAGS} ${LDFLAGS} -o camera-udp-listener camera-udp-listener.c
 }
 
@@ -31,15 +27,15 @@ do_install() {
 
     # Based on the cariq_node value, install the correct script and service
     if echo "${CARIQ_NODE}" | grep -q "ccn"; then
-        install -m 0755 ${UNPACKDIR}/camera-player.sh ${D}${bindir}/camera-player
-        install -m 0644 ${UNPACKDIR}/camera-player.service ${D}${systemd_system_unitdir}/camera-player.service
-        install -m 0755 ${UNPACKDIR}/camera-udp-listener ${D}${bindir}/camera-udp-listener
+        install -m 0755 ${WORKDIR}/camera-player.sh ${D}${bindir}/camera-player
+        install -m 0644 ${WORKDIR}/camera-player.service ${D}${systemd_system_unitdir}/camera-player.service
+        install -m 0755 ${WORKDIR}/camera-udp-listener ${D}${bindir}/camera-udp-listener
     elif echo "${CARIQ_NODE}" | grep -q "en1"; then
-        install -m 0755 ${UNPACKDIR}/camera-sender.sh ${D}${bindir}/camera-sender.sh
-        install -m 0644 ${UNPACKDIR}/camera-sender-en1.service ${D}${systemd_system_unitdir}/camera-sender.service
+        install -m 0755 ${WORKDIR}/camera-sender.sh ${D}${bindir}/camera-sender.sh
+        install -m 0644 ${WORKDIR}/camera-sender-en1.service ${D}${systemd_system_unitdir}/camera-sender.service
     elif echo "${CARIQ_NODE}" | grep -q "en2"; then
-        install -m 0755 ${UNPACKDIR}/camera-sender.sh ${D}${bindir}/camera-sender.sh
-        install -m 0644 ${UNPACKDIR}/camera-sender-en2.service ${D}${systemd_system_unitdir}/camera-sender.service
+        install -m 0755 ${WORKDIR}/camera-sender.sh ${D}${bindir}/camera-sender.sh
+        install -m 0644 ${WORKDIR}/camera-sender-en2.service ${D}${systemd_system_unitdir}/camera-sender.service
     else
         bbfatal "Error: Unknown CARIQ_NODE value: ${CARIQ_NODE}"
         exit 1

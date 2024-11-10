@@ -10,7 +10,7 @@ SRC_URI += "file://99-v3d.conf"
 
 do_install:append() {
     install -d ${D}${sysconfdir}/X11/xorg.conf.d
-    install -m 0644 ${WORKDIR}/sources-unpack/xorg.conf ${D}${sysconfdir}/X11/xorg.conf.d/xorg.conf || die "Failed to install xorg.conf"
-    install -m 0644 ${WORKDIR}/sources-unpack/99-v3d.conf ${D}${sysconfdir}/X11/xorg.conf.d/
+    install -m 0644 ${WORKDIR}/xorg.conf ${D}${sysconfdir}/X11/xorg.conf.d/xorg.conf || die "Failed to install xorg.conf"
+    install -m 0644 ${WORKDIR}/99-v3d.conf ${D}${sysconfdir}/X11/xorg.conf.d/
 }
 

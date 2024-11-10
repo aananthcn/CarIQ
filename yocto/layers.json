@@ -3,25 +3,31 @@
 		{
 			"repo": "meta-meson",
 			"git": "https://github.com/superna9999/meta-meson.git",
-			"branch": "master",
+			"branch": "scarthgap",
 			"comment": "For Khadas VIM3 as well as VIM4 machine configs"
 		},
 		{
 			"repo": "meta-openembedded",
 			"git": "git://git.openembedded.org/meta-openembedded",
-			"branch": "master",
+			"branch": "scarthgap",
 			"comment": "For Graphics, Networking, Multimedia, Python, ..."
 		},
 		{
 			"repo": "poky",
 			"git": "git://git.yoctoproject.org/poky",
-			"branch": "master",
+			"branch": "scarthgap",
 			"comment": "The Yocto basic layer"
 		},
 		{
 			"repo":"meta-raspberrypi",
 			"git":"https://github.com/agherzan/meta-raspberrypi.git",
-			"branch":"master",
+			"branch":"scarthgap",
+			"comment":"For RPi5/4/3's machine configs"
+		},
+		{
+			"repo":"meta-ros",
+			"git":"https://github.com/ros/meta-ros.git",
+			"branch":"scarthgap",
 			"comment":"For RPi5/4/3's machine configs"
 		}
 	]

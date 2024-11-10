@@ -46,10 +46,13 @@ IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
 # CarIQ Apps
 IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11"
 
-# Python stuffs
+# Python packages
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python-is-python3 pip-is-pip3 \
         moviepy"
+
+# ROS packages
+# IMAGE_INSTALL += "ros-core perception"
 
 
 # Development tools or utils

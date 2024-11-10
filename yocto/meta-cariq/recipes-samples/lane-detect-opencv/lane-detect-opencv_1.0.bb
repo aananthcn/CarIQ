@@ -6,8 +6,6 @@ SRC_URI = "file://lane_detect_opencv.py"
 
 inherit setuptools3-base
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
 
 # Dependencies
 DEPENDS += "opencv gstreamer1.0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav"
@@ -17,7 +15,7 @@ RDEPENDS:${PN} += "python3-opencv python3-numpy gstreamer1.0"
 # Install the Python script into the specified directory
 do_install() {
     install -d ${D}/home/root/test-scripts
-    install -m 0755 ${UNPACKDIR}/lane_detect_opencv.py ${D}/home/root/test-scripts/lane_detect_opencv.py
+    install -m 0755 ${WORKDIR}/lane_detect_opencv.py ${D}/home/root/test-scripts/lane_detect_opencv.py
 }
 
 FILES:${PN} += "/home/root/test-scripts/lane_detect_opencv.py"
