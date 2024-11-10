@@ -1,0 +1,1 @@
+SRC_URI:remove = "file://0001-CMakeLists.txt-prevent-building-zstd-with-ExternalPr.patch"

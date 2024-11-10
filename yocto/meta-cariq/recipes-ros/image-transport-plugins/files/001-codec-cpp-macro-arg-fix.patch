@@ -1,0 +1,56 @@
+diff -urN compr-a/.git/config compr-b/.git/config
+--- compr-a/.git/config	2024-11-10 19:37:42.800848877 +0530
++++ compr-b/.git/config	2024-11-10 19:39:08.520937003 +0530
+@@ -12,3 +12,4 @@
+ [branch "release/humble/compressed_depth_image_transport"]
+ 	remote = origin
+ 	merge = refs/heads/release/humble/compressed_depth_image_transport
++	vscode-merge-base = origin/master
+diff -urN compr-a/src/codec.cpp compr-b/src/codec.cpp
+--- compr-a/src/codec.cpp	2024-11-10 19:37:42.816848893 +0530
++++ compr-b/src/codec.cpp	2024-11-10 20:31:40.132040612 +0530
+@@ -99,7 +99,7 @@
+       }
+       catch (cv::Exception& e)
+       {
+-        RCLCPP_ERROR(logger, e.what());
++        RCLCPP_ERROR(logger, "%s", e.what());
+         return sensor_msgs::msg::Image::SharedPtr();
+       }
+ 
+@@ -142,7 +142,7 @@
+       }
+       catch (cv::Exception& e)
+       {
+-        RCLCPP_ERROR(logger, e.what());
++        RCLCPP_ERROR(logger, "%s", e.what());
+         return sensor_msgs::msg::Image::SharedPtr();
+       }
+ 
+@@ -207,7 +207,7 @@
+     }
+     catch (cv_bridge::Exception& e)
+     {
+-      RCLCPP_ERROR(logger, e.what());
++      RCLCPP_ERROR(logger, "%s", e.what());
+       return sensor_msgs::msg::CompressedImage::SharedPtr();
+     }
+ 
+@@ -266,7 +266,7 @@
+       }
+       catch (cv::Exception& e)
+       {
+-        RCLCPP_ERROR(logger, e.msg.c_str());
++        RCLCPP_ERROR(logger, "%s", e.msg.c_str());
+         return sensor_msgs::msg::CompressedImage::SharedPtr();
+       }
+     }
+@@ -282,7 +282,7 @@
+     }
+     catch (Exception& e)
+     {
+-      RCLCPP_ERROR(logger, e.msg.c_str());
++      RCLCPP_ERROR(logger, "%s", e.msg.c_str());
+       return sensor_msgs::msg::CompressedImage::SharedPtr();
+     }
+ 
