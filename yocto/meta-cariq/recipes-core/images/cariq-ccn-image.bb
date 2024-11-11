@@ -52,7 +52,8 @@ IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         moviepy"
 
 # ROS packages
-IMAGE_INSTALL += "ros-core perception ros2launch ros2bag ros2topic"
+IMAGE_INSTALL += "ros-core perception ros2launch ros2bag ros2topic ros-setup \
+        demo-nodes-cpp"
 
 
 # Development tools or utils
