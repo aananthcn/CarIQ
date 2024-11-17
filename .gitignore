@@ -5,6 +5,7 @@ cache
 build
 pn-buildlist
 task-depends.dot
+workspace
 
 # Ignore these yocto layers
 yocto/poky
