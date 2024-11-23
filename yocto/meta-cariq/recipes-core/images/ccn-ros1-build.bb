@@ -9,9 +9,17 @@ IMAGE_INSTALL = "\
     ros-core \
     packagegroup-ros1-comm \
     std-msgs \
+    console-bridge \
+    boost \
+    poco \
+    openssl \
+    gpgme \
+    log4cxx \
+    lz4 \
+    bzip2 \
+    python3 \
+    roscpp-tutorials \
 "
-
-# DEPENDS += "std-msgs_0.5.13-1"
 
 
 inherit core-image
