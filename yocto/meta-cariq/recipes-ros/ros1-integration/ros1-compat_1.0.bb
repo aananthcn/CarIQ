@@ -5,23 +5,23 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 
 # SRC_URI = "file://libconsole_bridge.so.0.4"
-SRC_DIR="${TOPDIR}/../build-ccn-ros1/tmp/work/khadas_vim3-poky-linux/ccn-ros1-build/1.0/rootfs/usr/lib"
+SRC_DIR="${TOPDIR}/../build-ccn-ros1/tmp/work/khadas_vim3-poky-linux/ccn-ros1-bins/1.0/rootfs/usr/lib"
 
 
 do_install() {
     install -d ${D}/etc/ld.so.conf.d/
-    install -d ${D}/opt/ros/noetic/usr/lib
+    install -d ${D}/opt/ros/noetic/lib
 
-    cp ${SRC_DIR}/libconsole_bridge.so.0.4 ${D}/opt/ros/noetic/usr/lib
+    cp ${SRC_DIR}/libconsole_bridge.so.0.4 ${D}/opt/ros/noetic/lib
 }
 
 
 do_install:append() {
-    echo "/opt/ros/noetic/usr/lib" > ${D}/etc/ld.so.conf.d/ros-noetic.conf
+    echo "/opt/ros/noetic/lib" > ${D}/etc/ld.so.conf.d/ros-noetic.conf
 }
 
 
-FILES:${PN} = "/opt/ros/noetic/usr/lib/libconsole_bridge.so.0.4 \
+FILES:${PN} = "/opt/ros/noetic/lib/libconsole_bridge.so.0.4 \
     /etc/ld.so.conf.d/ros-noetic.conf"
 
 

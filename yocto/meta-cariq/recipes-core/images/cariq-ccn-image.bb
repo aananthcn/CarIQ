@@ -29,7 +29,7 @@ IMAGE_INSTALL = "\
 IMAGE_INSTALL += " pkgconf"
 
 # Adding network manager for Compute Node
-IMAGE_INSTALL += "networkmanager network-manager-applet"
+IMAGE_INSTALL += "networkmanager network-manager-applet ufw"
 
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"

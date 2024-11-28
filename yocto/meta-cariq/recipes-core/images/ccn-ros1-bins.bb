@@ -17,9 +17,8 @@ IMAGE_INSTALL = "\
     log4cxx \
     lz4 \
     bzip2 \
-    python3 \
     roscpp-tutorials \
+    python3 \
 "
-
 
 inherit core-image
