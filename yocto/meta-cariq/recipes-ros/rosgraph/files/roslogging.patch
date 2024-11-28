@@ -1,0 +1,15 @@
+diff --git a/src/rosgraph/roslogging.py b/src/rosgraph/roslogging.py
+index f8058bf999..de60b71f9a 100644
+--- a/src/rosgraph/roslogging.py
++++ b/src/rosgraph/roslogging.py
+@@ -67,6 +67,10 @@ class RospyLogger(logging.getLoggerClass()):
+             filename = os.path.normcase(co.co_filename)
+             if filename == file_name and f.f_lineno == lineno and co.co_name == func_name:
+                 break
++            # Patch: Accept the logger from system default
++            logging_path = os.path.abspath(logging.__file__)
++            if logging_path != None and filename == logging_path:
++                break
+             if f.f_back:
+                 f = f.f_back
+ 

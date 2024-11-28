@@ -23,7 +23,7 @@ IMAGE_INSTALL = "\
     ffmpeg \
     socat \
     ${CORE_IMAGE_EXTRA_INSTALL} \
-    "
+"
 
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf"
@@ -38,7 +38,8 @@ IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"
 IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
-        gstreamer1.0-python v4l-utils libsdl2"
+        gstreamer1.0-python v4l-utils libsdl2 \
+"
 
 # for image processing, display libraries
 IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
@@ -49,21 +50,23 @@ IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11"
 # Python packages
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python-is-python3 pip-is-pip3 python3-defusedxml python3-rospkg \
-        python3-pycryptodome \
-        moviepy "
-
-# ROS2 packages
-IMAGE_INSTALL += "ros-core perception ros2launch ros2bag ros2topic ros-setup \
-        demo-nodes-cpp"
+        python3-pycryptodome python3-setuptools python3-catkin-pkg \
+        python3-rosdistro \
+        moviepy \
+"
 
 # ROS1 packages
-IMAGE_INSTALL += "ros1-pack-ccn ros1-compat"
+IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
+        std-msgs console-bridge boost poco openssl gpgme log4cxx lz4 bzip2 \
+        roscpp-tutorials \
+"
 
 # Development tools or utils
 IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
         nano tree opencv-dev opencv-staticdev gtk+-dev \
         npu-sdk-dev npu-bins \
-        python3-dev"
+        python3-dev \
+"
 
 
 
