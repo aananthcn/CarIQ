@@ -10,5 +10,5 @@ SRC_URI += "file://cyfmac43455-sdio.bin"
 
 do_install:append() {
     install -d ${D}${base_libdir}/firmware/cypress
-    install -m 0644 ${WORKDIR}/sources-unpack/cyfmac43455-sdio.bin ${D}${base_libdir}/firmware/cypress/cyfmac43455-sdio.bin
+    install -m 0644 ${WORKDIR}/cyfmac43455-sdio.bin ${D}${base_libdir}/firmware/cypress/cyfmac43455-sdio.bin
 }
