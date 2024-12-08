@@ -51,7 +51,7 @@ IMAGE_INSTALL += " camera-streamer lane-detect-opencv"
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python-is-python3 pip-is-pip3 python3-defusedxml python3-rospkg \
         python3-pycryptodome python3-setuptools python3-catkin-pkg \
-        python3-rosdistro \
+        python3-rosdistro python3-pycoral \
         moviepy \
 "
 
@@ -64,7 +64,7 @@ IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
 # Development tools or utils
 IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
         nano tree opencv-dev opencv-staticdev gtk+-dev \
-        npu-sdk-dev npu-bins \
+        libedgetpu-pb \
         python3-dev \
 "
 
