@@ -28,7 +28,7 @@
 			"repo":"meta-ros",
 			"git":"https://github.com/ros/meta-ros.git",
 			"branch":"scarthgap",
-			"comment":"For RPi5/4/3's machine configs"
+			"comment":"This layer contains recipes to integrate Robotic Operating Systems"
 		}
 	]
 }
