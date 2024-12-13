@@ -51,15 +51,21 @@ IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11"
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python-is-python3 pip-is-pip3 python3-defusedxml python3-rospkg \
         python3-pycryptodome python3-setuptools python3-catkin-pkg \
-        python3-rosdistro \
-        moviepy \
+        python3-rosdistro python3-pycoral python3-tflite-runtime moviepy \
+        python3-pillow python3-requests \
+        python3-pyproj python3-fiona python3-pandas python3-attrs python3-certifi \
+        python3-packaging python3-numpy python3-pytz python3-dateutil \
+        python3-charset-normalizer python3-idna python3-six \
 "
 
 # ROS1 packages
 IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
         std-msgs console-bridge boost poco openssl gpgme log4cxx lz4 bzip2 \
-        roscpp-tutorials \
+        roscpp-tutorials gdal \
 "
+
+# NPU / TensorFlow packages
+IMAGE_INSTALL += " libedgetpu"
 
 # Development tools or utils
 IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
