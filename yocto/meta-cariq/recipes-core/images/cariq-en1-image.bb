@@ -47,7 +47,7 @@ IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
 # CarIQ Apps
 IMAGE_INSTALL += " camera-streamer lane-detect-opencv"
 
-# Python stuffs
+# Python packages
 IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python-is-python3 pip-is-pip3 python3-defusedxml python3-rospkg \
         python3-pycryptodome python3-setuptools python3-catkin-pkg \
@@ -64,7 +64,7 @@ IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
         roscpp-tutorials gdal \
 "
 
-# NPU / TensorFlow recipes
+# NPU / TensorFlow packages
 IMAGE_INSTALL += " libedgetpu"
 
 # Development tools or utils
