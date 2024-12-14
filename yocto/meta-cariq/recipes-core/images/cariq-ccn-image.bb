@@ -26,7 +26,7 @@ IMAGE_INSTALL = "\
 "
 
 # Infrastructure components
-IMAGE_INSTALL += " pkgconf"
+IMAGE_INSTALL += " pkgconf ldd-aarch64"
 
 # Adding network manager for Compute Node
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"

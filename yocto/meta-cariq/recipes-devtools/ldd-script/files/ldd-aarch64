@@ -1,0 +1,46 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Usage: ldd <binary or shared library>"
+    exit 1
+fi
+
+input="$1"
+
+# Check if the input has a .so extension (shared library) or not (binary)
+case "$input" in
+    *.so)
+        type="library"
+        ;;
+    *)
+        type="binary"
+        ;;
+esac
+
+# Resolve the path for binaries or check if the file exists for libraries
+if [ "$type" = "binary" ]; then
+    resolved_path="$(command -v "$input")"
+else
+    resolved_path="$input"
+fi
+
+if [ -z "$resolved_path" ]; then
+    echo "Error: Command or file '$input' not found."
+    exit 1
+fi
+
+# For binaries, check if the file is executable
+if [ "$type" = "binary" ] && [ ! -x "$resolved_path" ]; then
+    echo "Error: $resolved_path is not an executable file."
+    exit 1
+fi
+
+# Print the type for clarity
+echo "Checking $type: $resolved_path"
+
+# Run the dynamic linker to list shared dependencies
+/lib/ld-linux-aarch64.so.1 --list "$resolved_path" || {
+    echo "Error: Could not load $resolved_path."
+    exit 1
+}
+
