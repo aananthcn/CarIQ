@@ -7,6 +7,12 @@ fi
 
 input="$1"
 
+# Check if the input is a folder
+if [ -d "$input" ]; then
+    echo "Error: '$input' is a folder. Folders are not supported."
+    exit 1
+fi
+
 # Check if the input has a .so extension (shared library) or not (binary)
 case "$input" in
     *.so)
@@ -33,6 +39,11 @@ fi
 if [ "$type" = "binary" ] && [ ! -x "$resolved_path" ]; then
     echo "Error: $resolved_path is not an executable file."
     exit 1
+fi
+
+# If the resolved path is a library without a path component, add ./ to ensure it's treated as a relative path
+if [ "$type" = "library" ] && [ "${resolved_path##*/}" = "$input" ]; then
+    resolved_path="./$input"
 fi
 
 # Print the type for clarity
