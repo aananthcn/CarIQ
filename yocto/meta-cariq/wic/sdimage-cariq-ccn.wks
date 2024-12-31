@@ -1,0 +1,16 @@
+# short-description: Create SD card image with boot, update, and root partitions for Khadas VIM3 (Central Compute Node)
+# long-description: Creates a partitioned SD card image. Boot files are located in the first vfat partition, an update partition in the second, and the root filesystem at the end.
+
+
+# Boot partition
+part /boot --source bootimg-partition --fstype=vfat --label boot --active --align 4096 --size 64 --sourceparams="loader=u-boot" --use-uuid
+
+# Update partition (fixed 4 GB size)
+#part /update --source rawcopy --fstype=ext4 --label update --align 4096 --size 4032 --sourceparams="file=update.ext4"
+part /update --source rawcopy --fstype=ext4 --label update --align 4096 --size 4032 --sourceparams="file=update.ext4" --use-uuid --fsuuid a234f914-257f-4ae7-8ebf-614ddf817799
+
+# Root filesystem partition 
+part / --source rootfs --fstype=ext4 --use-uuid --label root --align 4096
+
+# Partition Table description
+bootloader --ptable msdos --append="console=ttyAML0,115200"

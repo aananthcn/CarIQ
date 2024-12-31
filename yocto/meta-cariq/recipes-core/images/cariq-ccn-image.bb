@@ -64,6 +64,10 @@ IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
         roscpp-tutorials gdal \
 "
 
+# OTA packages
+DEPENDS += "update-image \
+"
+
 # NPU / TensorFlow packages
 IMAGE_INSTALL += " libedgetpu"
 
