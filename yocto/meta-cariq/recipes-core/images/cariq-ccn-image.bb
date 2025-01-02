@@ -65,7 +65,7 @@ IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
 "
 
 # OTA packages
-DEPENDS += "update-image \
+IMAGE_INSTALL += " pv ota-files lsof \
 "
 
 # NPU / TensorFlow packages

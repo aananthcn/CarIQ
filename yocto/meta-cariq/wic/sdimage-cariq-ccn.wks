@@ -2,11 +2,13 @@
 # long-description: Creates a partitioned SD card image. Boot files are located in the first vfat partition, an update partition in the second, and the root filesystem at the end.
 
 
+# Refer: https://docs.yoctoproject.org/3.3.5/ref-manual/kickstart.html#command-part-or-partition
+
+
 # Boot partition
 part /boot --source bootimg-partition --fstype=vfat --label boot --active --align 4096 --size 64 --sourceparams="loader=u-boot" --use-uuid
 
 # Update partition (fixed 4 GB size)
-#part /update --source rawcopy --fstype=ext4 --label update --align 4096 --size 4032 --sourceparams="file=update.ext4"
 part /update --source rawcopy --fstype=ext4 --label update --align 4096 --size 4032 --sourceparams="file=update.ext4" --use-uuid --fsuuid a234f914-257f-4ae7-8ebf-614ddf817799
 
 # Root filesystem partition 
