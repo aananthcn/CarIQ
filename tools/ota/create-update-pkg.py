@@ -18,12 +18,14 @@ def read_local_conf(local_conf_path, key):
     return None
 
 
-def create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url):
+def create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, machine_name):
     """Creates the package manifest JSON."""
     return {
+        "machine_nm": machine_name,
         "sw_version": sw_version,
         "url_kernel": kernel_url,
-        "url_rootfs": rootfs_url
+        "url_rootfs": rootfs_url,
+        "allow_updt": "YES"
     }
 
 
@@ -43,19 +45,15 @@ def main():
     # Determine paths
     script_path = os.path.dirname(os.path.abspath(__file__))
     build_path = os.path.abspath(os.path.join(script_path, f"../..", f"build-{cariq_node}"))
-
-    if cariq_node == "ccn":
-        deploy_path = os.path.join(build_path, "tmp/deploy/images/khadas-vim3")
-    else:
-        deploy_path = os.path.join(build_path, "tmp/deploy/images/raspberrypi5")
-
     local_conf_path = os.path.join(build_path, "conf/local.conf")
 
     # Read local.conf values
+    machine_name = read_local_conf(local_conf_path, "MACHINE")
+    deploy_path = os.path.join(build_path, f"tmp/deploy/images/{machine_name}")
     sw_version = read_local_conf(local_conf_path, "CARIQ_SW_VERSION")
     ota_srv_url = read_local_conf(local_conf_path, "CARIQ_OTASRV_URL").rstrip('/')
 
-    if not sw_version or not ota_srv_url:
+    if not sw_version or not ota_srv_url or not machine_name:
         print("Error: Missing required values in local.conf.")
         sys.exit(1)
 
@@ -71,7 +69,7 @@ def main():
 
     # Copy kernel and rootfs
     kernel_file = os.path.join(deploy_path, "fitImage")
-    rootfs_file = os.path.join(deploy_path, f"cariq-{cariq_node}-image-khadas-vim3.tar.bz2")
+    rootfs_file = os.path.join(deploy_path, f"cariq-{cariq_node}-image-{machine_name}.tar.bz2")
 
     if not os.path.exists(kernel_file):
         print(f"Error: Kernel file not found at {kernel_file}.")
@@ -82,14 +80,14 @@ def main():
         sys.exit(1)
 
     shutil.copy(kernel_file, os.path.join(ota_pkg_folder, "fitImage"))
-    shutil.copy(rootfs_file, os.path.join(ota_pkg_folder, f"cariq-{cariq_node}-image-khadas-vim3.tar.bz2"))
+    shutil.copy(rootfs_file, os.path.join(ota_pkg_folder, f"cariq-{cariq_node}-image-{machine_name}.tar.bz2"))
 
-    # Create pkg-manifest.json
+    # Create ota-pkg-manifest.json
     kernel_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/fitImage"
-    rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/cariq-{cariq_node}-image-khadas-vim3.tar.bz2"
-    pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url)
+    rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/cariq-{cariq_node}-image-{machine_name}.tar.bz2"
+    pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, machine_name)
 
-    with open(os.path.join(ota_pkg_folder, "pkg-manifest.json"), 'w') as manifest_file:
+    with open(os.path.join(ota_pkg_folder, "ota-pkg-manifest.json"), 'w') as manifest_file:
         json.dump(pkg_manifest, manifest_file, indent=4)
 
     # Move package to deploy_path
