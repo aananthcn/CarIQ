@@ -6,8 +6,8 @@ inherit allarch
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI = "file://ota-updater.sh"
-SRC_URI += "file://ota-update-manager.py"
+SRC_URI  = "file://ota-updater.sh"
+SRC_URI += "file://ota-checker.py"
 
 S = "${WORKDIR}"
 
@@ -19,7 +19,7 @@ do_install() {
     # Create /usr/bin directory and install the scripts
     install -d ${D}/usr/bin
     install -m 0755 ${S}/ota-updater.sh ${D}/usr/bin/ota-updater.sh
-    install -m 0755 ${S}/ota-update-manager.py ${D}/usr/bin/ota-update-manager.py
+    install -m 0755 ${S}/ota-checker.py ${D}/usr/bin/ota-checker.py
 
     # Create /etc/ota directory and generate the JSON file
     install -d ${D}/etc/ota

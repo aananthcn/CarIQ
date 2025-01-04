@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import json
 import requests
@@ -59,6 +61,7 @@ def main():
         exit(1)
 
     # Construct the manifest URL
+    print("Preparing to download the manifest file...")
     manifest_url = f"{server_url}/ota-pkg-{cariq_node}/ota-pkg-manifest.json"
 
     # Download the manifest file
@@ -106,6 +109,11 @@ def main():
 
     # Notify the user
     notify_user()
+
+    # Clean up the manifest file
+    if os.path.exists(manifest_path):
+        os.remove(manifest_path)
+        print("Cleaned up package manifest file.")
 
 
 if __name__ == "__main__":
