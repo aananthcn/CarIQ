@@ -69,9 +69,17 @@ def main():
         shutil.rmtree(ota_pkg_folder)
     os.makedirs(ota_pkg_folder)
 
-    # Copy kernel and rootfs
-    kernel_file = os.path.join(deploy_path, "fitImage")
-    rootfs_file = os.path.join(deploy_path, f"cariq-{cariq_node}-image-{machine_name}.tar.bz2")
+    # Determine kernel file name based on cariq_node
+    kernel_file_name = "fitImage" if cariq_node == "ccn" else "Image"
+    kernel_file = os.path.join(deploy_path, kernel_file_name)
+
+    # Determine rootfs file name based on cariq_node
+    if cariq_node == "ccn":
+        rootfs_file_name = f"cariq-{cariq_node}-image-{machine_name}.tar.bz2"
+    else:
+        rootfs_file_name = f"cariq-{cariq_node}-image-{machine_name}.rootfs.tar.bz2"
+
+    rootfs_file = os.path.join(deploy_path, rootfs_file_name)
 
     if not os.path.exists(kernel_file):
         print(f"Error: Kernel file not found at {kernel_file}.")
@@ -81,12 +89,18 @@ def main():
         print(f"Error: Rootfs file not found at {rootfs_file}.")
         sys.exit(1)
 
-    shutil.copy(kernel_file, os.path.join(ota_pkg_folder, "fitImage"))
-    shutil.copy(rootfs_file, os.path.join(ota_pkg_folder, f"cariq-{cariq_node}-image-{machine_name}.tar.bz2"))
+    # Copy kernel and rootfs
+    if cariq_node in ["en1", "en2"]:
+        shutil.copy(kernel_file, os.path.join(ota_pkg_folder, "kernel_2712.img"))
+    else:
+        shutil.copy(kernel_file, os.path.join(ota_pkg_folder, kernel_file_name))
+
+    shutil.copy(rootfs_file, os.path.join(ota_pkg_folder, rootfs_file_name))
 
     # Create ota-pkg-manifest.json
-    kernel_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/fitImage"
-    rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/cariq-{cariq_node}-image-{machine_name}.tar.bz2"
+    kernel_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/"
+    kernel_url += "kernel_2712.img" if cariq_node in ["en1", "en2"] else kernel_file_name
+    rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/{rootfs_file_name}"
     pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, machine_name)
 
     with open(os.path.join(ota_pkg_folder, "ota-pkg-manifest.json"), 'w') as manifest_file:

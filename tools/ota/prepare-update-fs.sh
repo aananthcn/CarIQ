@@ -27,19 +27,19 @@ case "$ARG" in
     "ccn")
         MACHINE="khadas-vim3"
         DEPLOY_DIR="${SCRIPT_DIR}/../../build-ccn/tmp/deploy/images/${MACHINE}"
+        ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.tar.bz2"
         ;;
     "en1")
         MACHINE="raspberrypi5"
         DEPLOY_DIR="${SCRIPT_DIR}/../../build-en1/tmp/deploy/images/${MACHINE}"
+        ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.rootfs.tar.bz2"
         ;;
     "en2")
         MACHINE="raspberrypi5"
         DEPLOY_DIR="${SCRIPT_DIR}/../../build-en2/tmp/deploy/images/${MACHINE}"
+        ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.rootfs.tar.bz2"
         ;;
 esac
-
-# Update ROOTFS_ARCHIVE path
-ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.tar.bz2"
 
 # Debugging output for verification
 echo "Using settings:"
