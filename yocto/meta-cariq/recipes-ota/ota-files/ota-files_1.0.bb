@@ -6,38 +6,25 @@ inherit allarch
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI  = "file://ota-updater-ccn.sh"
-SRC_URI += "file://ota-updater-en1.sh"
-SRC_URI += "file://ota-updater-en2.sh"
+SRC_URI  = "file://ota-updater.sh"
 SRC_URI += "file://ota-checker.py"
 
 S = "${WORKDIR}"
 
 CARIQ_SW_VERSION ?= "0.0.0"
 
-FILES_${PN} += "/usr/bin/ota-updater.sh /usr/bin/ota-update-manager.py /etc/ota/ota-config.json"
+
+FILES_${PN} += " \
+    /usr/bin/ota-updater.sh \
+    /usr/bin/ota-checker.py \
+    /etc/ota/ota-dlconf.sh  \
+    /etc/ota/ota-config.json"
+
 
 do_install() {
-    # Determine the correct ota-updater script based on CARIQ_NODE
-    case "${CARIQ_NODE}" in
-        "ccn")
-            OTA_UPDATER_SCRIPT="ota-updater-ccn.sh"
-            ;;
-        "en1")
-            OTA_UPDATER_SCRIPT="ota-updater-en1.sh"
-            ;;
-        "en2")
-            OTA_UPDATER_SCRIPT="ota-updater-en2.sh"
-            ;;
-        *)
-            bberror "Unsupported CARIQ_NODE value: ${CARIQ_NODE}. Must be 'ccn', 'en1', or 'en2'."
-            exit 1
-            ;;
-    esac
-
     # Create /usr/bin directory and install the selected script
     install -d ${D}/usr/bin
-    install -m 0755 ${S}/${OTA_UPDATER_SCRIPT} ${D}/usr/bin/ota-updater.sh
+    install -m 0755 ${S}/ota-updater.sh ${D}/usr/bin/ota-updater.sh
     install -m 0755 ${S}/ota-checker.py ${D}/usr/bin/ota-checker.py
 
     # Create /etc/ota directory and generate the JSON file
@@ -54,6 +41,28 @@ do_install() {
     echo '    "cariq_node": "'${CARIQ_NODE}'",' >> ${D}/etc/ota/ota-config.json
     echo '    "machine_nm": "'${MACHINE_NAME}'"' >> ${D}/etc/ota/ota-config.json
     echo '}' >> ${D}/etc/ota/ota-config.json
+
+    # Generate the download configuration file based on CARIQ_NODE
+    echo "# Auto-generated download configuration" > ${D}/etc/ota/ota-dlconf.sh
+
+    case "${CARIQ_NODE}" in
+        ccn)
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-ccn-image-khadas-vim3.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "KERNEL_UPDATE=\"/update/downloads/fitImage\"" >> ${D}/etc/ota/ota-dlconf.sh
+            ;;
+        en1)
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en1-image-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "KERNEL_UPDATE=\"/update/downloads/kernel_2712.img\"" >> ${D}/etc/ota/ota-dlconf.sh
+            ;;
+        en2)
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en2-image-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "KERNEL_UPDATE=\"/update/downloads/kernel_2712.img\"" >> ${D}/etc/ota/ota-dlconf.sh
+            ;;
+        *)
+            echo "echo 'Unknown CARIQ_NODE: ${CARIQ_NODE}. Exiting.'" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "exit 1" >> ${D}/etc/ota/ota-dlconf.sh
+            ;;
+    esac
 }
 
 RDEPENDS:${PN} = "bash python3"

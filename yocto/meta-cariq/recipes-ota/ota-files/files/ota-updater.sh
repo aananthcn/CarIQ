@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# Define paths
-ROOTFS_UPDATE="/update/downloads/cariq-ccn-image-khadas-vim3.tar.bz2"
-KERNEL_UPDATE="/update/downloads/fitImage"
+# Common variables
 NEW_ROOT="/update"
 OLD_ROOT="/update/mnt"
 UPDATE_FLAG="/update/reboot_required.flag"
 LOG_FILE="/update/ota-update.log"
-
 
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
@@ -15,6 +12,13 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# Source the download configuration
+if [ -f /etc/ota/ota-dlconf.sh ]; then
+    source /etc/ota/ota-dlconf.sh
+else
+    echo "Configuration file /etc/ota/ota-dlconf.sh not found. Exiting." | tee -a "$LOG_FILE"
+    exit 1
+fi
 
 # Remove any stale update flag
 rm -f "$UPDATE_FLAG" | tee -a "$LOG_FILE"
@@ -43,7 +47,7 @@ if [ -f "$ROOTFS_UPDATE" ]; then
 
         # Delete old root filesystem contents
         echo "Deleting old root filesystem..." | tee -a "$LOG_FILE"
-        rm -rf /mnt/bin /mnt/etc /mnt/home /mnt/lib /mnt/media /mnt/mnt /mnt/opt \
+        rm -rf /mnt/bin /mnt/etc /mnt/lib /mnt/media /mnt/mnt /mnt/opt \
                /mnt/root /mnt/sbin /mnt/srv /mnt/usr || {
             echo "Failed to delete old files. Exiting." | tee -a "$LOG_FILE"
             exit 1
