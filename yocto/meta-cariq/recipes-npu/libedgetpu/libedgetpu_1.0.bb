@@ -27,23 +27,28 @@ RDEPENDS:${PN} = "libusb1"
 LIBEDGETPU_TYPE = "direct"
 LIBEDGETPU_ARCH = "aarch64"
 
+
 do_install() {
     install -d ${D}${sysconfdir}/udev/rules.d
     install -m 0644 ${UNZIP_DIR}/libedgetpu/edgetpu-accelerator.rules \
                     ${D}${sysconfdir}/udev/rules.d/99-edgetpu-accelerator.rules
 
-    install -d ${D}/${libdir}
+    install -d ${D}${libdir}
     install -m 755 ${UNZIP_DIR}/libedgetpu/${LIBEDGETPU_TYPE}/${LIBEDGETPU_ARCH}/libedgetpu.so.1.0 \
-                   ${D}/${libdir}/libedgetpu.so.1.0
-    ln -sf ${libdir}/libedgetpu.so.1.0 ${D}/${libdir}/libedgetpu.so.1
-    ln -sf ${libdir}/libedgetpu.so.1.0 ${D}/${libdir}/libedgetpu.so
+                   ${D}${libdir}/libedgetpu.so.1.0
+    ln -sf libedgetpu.so.1.0 ${D}${libdir}/libedgetpu.so.1
+    ln -sf libedgetpu.so.1.0 ${D}${libdir}/libedgetpu.so
 
-    install -d ${D}/${includedir}
-    install -m 755 ${UNZIP_DIR}/libedgetpu/edgetpu.h ${D}/${includedir}/edgetpu.h
+    install -d ${D}${includedir}
+    install -m 755 ${UNZIP_DIR}/libedgetpu/edgetpu.h ${D}${includedir}/edgetpu.h
 }
 
+
 FILES:${PN} += "${libdir}/libedgetpu.so \
+                ${libdir}/libedgetpu.so.1 \
+                ${libdir}/libedgetpu.so.1.0 \
                 ${includedir}/edgetpu.h \
 "
+
 
 INSANE_SKIP:${PN} += "already-stripped"

@@ -29,6 +29,12 @@
 			"git":"https://github.com/ros/meta-ros.git",
 			"branch":"scarthgap",
 			"comment":"This layer contains recipes to integrate Robotic Operating Systems"
+		},
+		{
+			"repo":"meta-tensorflow",
+			"git":"https://git.yoctoproject.org/meta-tensorflow",
+			"branch":"scarthgap",
+			"comment":"Layer containing recipes related to building tensorflow"
 		}
 	]
 }
