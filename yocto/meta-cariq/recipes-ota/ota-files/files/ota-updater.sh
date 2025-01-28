@@ -39,10 +39,14 @@ if [ -f "$ROOTFS_UPDATE" ]; then
     mkdir -p "$OLD_ROOT"
     mount --bind / "$OLD_ROOT" || { echo "Failed to bind old root. Exiting." | tee -a "$LOG_FILE"; exit 1; }
 
+    # Write ROOTFS_UPDATE to a temporary file accessible inside chroot
+    echo "${ROOTFS_UPDATE#/update}" > "/update/rootfs_update_path"
+
     # Switch to the new root using chroot
     echo "Switching to the new root environment using chroot..." | tee -a "$LOG_FILE"
     chroot "$NEW_ROOT" /bin/sh <<'EOF'
-        LOG_FILE="/ota-update.log" # Inside chroot, /update becomes /
+        LOG_FILE="/ota-update.log"
+        ROOTFS_UPDATE=$(cat /rootfs_update_path)
         echo "Entered the new root environment." | tee -a "$LOG_FILE"
 
         # Delete old root filesystem contents
@@ -55,7 +59,7 @@ if [ -f "$ROOTFS_UPDATE" ]; then
 
         # Extract the new RootFS
         echo "Extracting new RootFS..." | tee -a "$LOG_FILE"
-        pv "/downloads/cariq-ccn-image-khadas-vim3.tar.bz2" | tar --exclude='var/*' --exclude='./boot/*' -xjf - -C /mnt || {
+        pv "$ROOTFS_UPDATE" | tar --exclude='var/*' --exclude='./boot/*' -xjf - -C /mnt || {
             echo "RootFS extraction failed. Exiting." | tee -a "$LOG_FILE"
             exit 1
         }
@@ -69,6 +73,8 @@ if [ -f "$ROOTFS_UPDATE" ]; then
 
         echo "RootFS update complete." | tee -a "$LOG_FILE"
 EOF
+    # Clean up the temporary file
+    rm -f "/update/rootfs_update_path"
 
     # Indicate that a reboot is required
     touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
