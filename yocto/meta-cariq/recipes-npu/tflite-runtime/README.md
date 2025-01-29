@@ -27,3 +27,13 @@
  * `ls tensorflow/lite/tools/pip_package/gen/tflite_pip/python3.12/dist/tflite_runtime-2.16.1-cp312-cp312-linux_aarch64.whl`
    * You should see the file
  * Copy the above files into the `files` folder of this recipe.
+
+
+<br><br>
+<span style="color:red">Note</span>: following packages are related and their version needs to be carefully upgraded
+
+| S.No  | Recipe Name      | Version / Tag     |
+|-------|-----------------|-------------------|
+| 1     | libedgetpu      | 16.0TF2.16.1-1    |
+| 2     | tensorflow-lite | v2.16.1           |
+| 3     | tflite-runtime  | v2.16.1           |

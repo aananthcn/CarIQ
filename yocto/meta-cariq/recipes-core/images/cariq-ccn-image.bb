@@ -15,12 +15,9 @@ IMAGE_INSTALL = "\
     opkg \
     opkg-collateral \
     packagegroup-xfce-base \
-    mesa \
-    libgl \
     packagegroup-basic \
     packagegroup-base \
     lshw \
-    ffmpeg \
     socat \
     ${CORE_IMAGE_EXTRA_INSTALL} \
 "
@@ -31,6 +28,9 @@ IMAGE_INSTALL += " pkgconf ldd-aarch64"
 # Adding network manager for Compute Node
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"
 
+# Adding graphics recipes
+IMAGE_INSTALL += " libgl mesa mesa-demos xserver-xorg-extension-glx"
+
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"
 
@@ -38,7 +38,7 @@ IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"
 IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
-        gstreamer1.0-python v4l-utils libsdl2 \
+        gstreamer1.0-python v4l-utils libsdl2 ffmpeg \
 "
 
 # for image processing, display libraries

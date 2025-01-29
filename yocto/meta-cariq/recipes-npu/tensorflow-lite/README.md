@@ -2,6 +2,7 @@
 
 ## References
  * https://github.com/feranick/tensorflow
+ * https://github.com/feranick/TFlite-builds
  * Also check **meta-cariq/recipes-npu/tflite-runtime/tflite-runtime_2.16.1.bb**
 
 <br>
@@ -32,3 +33,13 @@
  * Change directory to `tensorflow` (the cloned git folder)
  * `ls bazel-bin/tensorflow/lite/`
  * You should see your `libtensorflowlite.so` file there, copy to the `files` folder of this recipe.
+
+
+<br><br>
+<span style="color:red">Note</span>: following packages are related and their version needs to be carefully upgraded
+
+| S.No  | Recipe Name      | Version / Tag     |
+|-------|-----------------|-------------------|
+| 1     | libedgetpu      | 16.0TF2.16.1-1    |
+| 2     | tensorflow-lite | v2.16.1           |
+| 3     | tflite-runtime  | v2.16.1           |
