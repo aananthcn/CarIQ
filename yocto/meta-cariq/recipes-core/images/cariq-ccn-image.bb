@@ -14,7 +14,6 @@ IMAGE_INSTALL = "\
     linux-firmware \
     opkg \
     opkg-collateral \
-    packagegroup-xfce-base \
     packagegroup-basic \
     packagegroup-base \
     lshw \
@@ -29,7 +28,8 @@ IMAGE_INSTALL += " pkgconf ldd-aarch64"
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"
 
 # Adding graphics recipes
-IMAGE_INSTALL += " libgl mesa mesa-demos xserver-xorg-extension-glx"
+IMAGE_INSTALL += " packagegroup-xfce-base libgl mesa mesa-demos xserver-xorg-extension-glx \
+"
 
 # systemd is used as init manager for all nodes
 IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"
