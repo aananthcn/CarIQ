@@ -76,8 +76,8 @@ IMAGE_INSTALL += " pv ota-files lsof \
 IMAGE_INSTALL += " libedgetpu tensorflow-lite"
 
 # Adaptive AUTOSAR packages
-IMAGE_INSTALL += " doip-lib obd2-emulator async-bsd-socket-lib jsoncpp curl \
-        pugixml \
+IMAGE_INSTALL += " adaptive-autosar doip-lib obd2-emulator async-bsd-socket-lib \
+        jsoncpp curl pugixml \
 "
 
 # CarIQ Apps

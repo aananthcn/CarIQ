@@ -29,9 +29,15 @@ do_install() {
     install -m 0644 ${B}/libdoip_lib.so.0.1 ${D}${libdir}
     ln -sf libdoip_lib.so.0.1 ${D}${libdir}/libdoip_lib.so.0
     ln -sf libdoip_lib.so.0.1 ${D}${libdir}/libdoip_lib.so
+
+	# Install header files
+    install -d ${D}${includedir}/doiplib
+    install -m 0644 ${S}/include/doiplib/* ${D}${includedir}/doiplib/
 }
 
 FILES:${PN} += "${libdir}/libdoip_lib.so.0.1 \
 	${libdir}/libdoip_lib.so.0 \
 	${libdir}/libdoip_lib.so \
 "
+
+FILES:${PN}-dev += "${includedir}/doiplib"

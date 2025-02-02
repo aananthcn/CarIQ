@@ -30,6 +30,10 @@ do_install() {
     install -m 0644 ${B}/libasync_bsd_socket_lib.so.0.1 ${D}${libdir}
     ln -sf libasync_bsd_socket_lib.so.0.1 ${D}${libdir}/libasync_bsd_socket_lib.so.0
     ln -sf libasync_bsd_socket_lib.so.0.1 ${D}${libdir}/libasync_bsd_socket_lib.so
+
+	# Install header files
+    install -d ${D}${includedir}/asyncbsdsocket
+    install -m 0644 ${S}/include/asyncbsdsocket/* ${D}${includedir}/asyncbsdsocket/
 }
 
 
@@ -37,3 +41,5 @@ FILES:${PN} += "${libdir}/libasync_bsd_socket_lib.so.0.1 \
 	${libdir}/libasync_bsd_socket_lib.so.0 \
 	${libdir}/libasync_bsd_socket_lib.so \
 "
+
+FILES:${PN}-dev += "${includedir}/asyncbsdsocket"

@@ -28,9 +28,15 @@ do_install() {
     install -m 0644 ${B}/libobd_ii_emulator.so.0.1 ${D}${libdir}
     ln -sf libobd_ii_emulator.so.0.1 ${D}${libdir}/libobd_ii_emulator.so.0
     ln -sf libobd_ii_emulator.so.0.1 ${D}${libdir}/libobd_ii_emulator.so
+
+	# Install header files
+    install -d ${D}${includedir}/obdemulator
+    install -m 0644 ${S}/include/obdemulator/* ${D}${includedir}/obdemulator/
 }
 
 FILES:${PN} += "${libdir}/libobd_ii_emulator.so.0.1 \
 	${libdir}/libobd_ii_emulator.so.0 \
 	${libdir}/libobd_ii_emulator.so \
 "
+
+FILES:${PN}-dev += "${includedir}/obdemulator"
