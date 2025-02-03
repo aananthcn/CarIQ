@@ -24,13 +24,6 @@ IMAGE_INSTALL = "\
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf ldd-aarch64"
 
-# Development tools or utils
-IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
-        nano tree opencv-dev opencv-staticdev gtk+-dev gdb gdbserver \
-        npu-sdk-dev npu-bins \
-        python3-dev \
-"
-
 # Adding network manager for Compute Node
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"
 
@@ -83,6 +76,13 @@ IMAGE_INSTALL += " adaptive-autosar doip-lib obd2-emulator async-bsd-socket-lib 
 # CarIQ Apps
 IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11 \
         coral-camera \
+"
+
+# Development tools or utils
+IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
+        nano tree opencv-dev opencv-staticdev gtk+-dev gdb gdbserver \
+        npu-sdk-dev npu-bins adaptive-autosar-dev \
+        python3-dev \
 "
 
 

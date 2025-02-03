@@ -34,61 +34,18 @@ do_install() {
     # Create the directory where the library should be installed.
     install -d ${D}${libdir}
 
-    # Install libara_com.so
-    install -m 0644 ${B}/libara_com.so ${B}/libara_com.so.0.1
-    install -m 0644 ${B}/libara_com.so.0.1 ${D}${libdir}/libara_com.so.0.1
-    ln -sf libara_com.so.0.1 ${D}${libdir}/libara_com.so.0
-    ln -sf libara_com.so.0.1 ${D}${libdir}/libara_com.so
-    rm -rf ${B}/libara_com.so.0.1
+    # Install shared libraries
+    for lib in ara_com ara_diag ara_log ara_sm ara_core ara_exec ara_phm arxml; do
+        install -m 0644 ${B}/lib${lib}.so ${B}/lib${lib}.so.0.1
+        install -m 0644 ${B}/lib${lib}.so.0.1 ${D}${libdir}/lib${lib}.so.0.1
+        ln -sf lib${lib}.so.0.1 ${D}${libdir}/lib${lib}.so.0
+        ln -sf lib${lib}.so.0.1 ${D}${libdir}/lib${lib}.so
+        rm -rf ${B}/lib${lib}.so.0.1
+    done
 
-    # Install libara_diag.so
-    install -m 0644 ${B}/libara_diag.so ${B}/libara_diag.so.0.1
-    install -m 0644 ${B}/libara_diag.so.0.1 ${D}${libdir}/libara_diag.so.0.1
-    ln -sf libara_diag.so.0.1 ${D}${libdir}/libara_diag.so.0
-    ln -sf libara_diag.so.0.1 ${D}${libdir}/libara_diag.so
-    rm -rf ${B}/libara_diag.so.0.1
-
-    # Install libara_log.so
-    install -m 0644 ${B}/libara_log.so ${B}/libara_log.so.0.1
-    install -m 0644 ${B}/libara_log.so.0.1 ${D}${libdir}/libara_log.so.0.1
-    ln -sf libara_log.so.0.1 ${D}${libdir}/libara_log.so.0
-    ln -sf libara_log.so.0.1 ${D}${libdir}/libara_log.so
-    rm -rf ${B}/libara_log.so.0.1
-
-    # Install libara_sm.so
-    install -m 0644 ${B}/libara_sm.so ${B}/libara_sm.so.0.1
-    install -m 0644 ${B}/libara_sm.so.0.1 ${D}${libdir}/libara_sm.so.0.1
-    ln -sf libara_sm.so.0.1 ${D}${libdir}/libara_sm.so.0
-    ln -sf libara_sm.so.0.1 ${D}${libdir}/libara_sm.so
-    rm -rf ${B}/libara_sm.so.0.1
-
-    # Install libara_core.so
-    install -m 0644 ${B}/libara_core.so ${B}/libara_core.so.0.1
-    install -m 0644 ${B}/libara_core.so.0.1 ${D}${libdir}/libara_core.so.0.1
-    ln -sf libara_core.so.0.1 ${D}${libdir}/libara_core.so.0
-    ln -sf libara_core.so.0.1 ${D}${libdir}/libara_core.so
-    rm -rf ${B}/libara_core.so.0.1
-
-    # Install libara_exec.so
-    install -m 0644 ${B}/libara_exec.so ${B}/libara_exec.so.0.1
-    install -m 0644 ${B}/libara_exec.so.0.1 ${D}${libdir}/libara_exec.so.0.1
-    ln -sf libara_exec.so.0.1 ${D}${libdir}/libara_exec.so.0
-    ln -sf libara_exec.so.0.1 ${D}${libdir}/libara_exec.so
-    rm -rf ${B}/libara_exec.so.0.1
-
-    # Install libara_phm.so
-    install -m 0644 ${B}/libara_phm.so ${B}/libara_phm.so.0.1
-    install -m 0644 ${B}/libara_phm.so.0.1 ${D}${libdir}/libara_phm.so.0.1
-    ln -sf libara_phm.so.0.1 ${D}${libdir}/libara_phm.so.0
-    ln -sf libara_phm.so.0.1 ${D}${libdir}/libara_phm.so
-    rm -rf ${B}/libara_phm.so.0.1
-
-    # Install libarxml.so
-    install -m 0644 ${B}/libarxml.so ${B}/libarxml.so.0.1
-    install -m 0644 ${B}/libarxml.so.0.1 ${D}${libdir}/libarxml.so.0.1
-    ln -sf libarxml.so.0.1 ${D}${libdir}/libarxml.so.0
-    ln -sf libarxml.so.0.1 ${D}${libdir}/libarxml.so
-    rm -rf ${B}/libarxml.so.0.1
+    # Install header files under ${includedir}/adaptive-autosar
+    install -d ${D}${includedir}/adaptive-autosar
+    find ${S}/src -type f -name "*.h" -exec install -m 0644 {} ${D}${includedir}/adaptive-autosar/ \;
 }
 
 
@@ -117,3 +74,9 @@ FILES:${PN} += "${libdir}/libara_com.so.0.1 \
 	${libdir}/libarxml.so.0 \
 	${libdir}/libarxml.so \
 "
+
+# Ensure the .so files do not end up in the dev package
+FILES_SOLIBSDEV = ""
+
+# This disables dev-so QA checks for specific shared libraries without symlink
+INSANE_SKIP:${PN} += "dev-so"

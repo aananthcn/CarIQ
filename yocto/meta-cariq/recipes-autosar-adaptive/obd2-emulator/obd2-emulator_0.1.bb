@@ -40,3 +40,9 @@ FILES:${PN} += "${libdir}/libobd_ii_emulator.so.0.1 \
 "
 
 FILES:${PN}-dev += "${includedir}/obdemulator"
+
+# Ensure the .so files do not end up in the dev package
+FILES_SOLIBSDEV = ""
+
+# This disables dev-so QA checks for specific shared libraries without symlink
+INSANE_SKIP:${PN} += "dev-so"
