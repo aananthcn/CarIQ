@@ -52,7 +52,7 @@ IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python3-pyproj python3-fiona python3-pandas python3-attrs python3-certifi \
         python3-packaging python3-numpy python3-pytz python3-dateutil \
         python3-charset-normalizer python3-idna python3-six \
-        tflite-runtime \
+        python3-pyaudio \
 "
 
 # ROS1 packages
@@ -66,7 +66,7 @@ IMAGE_INSTALL += " pv ota-files lsof \
 "
 
 # NPU / TensorFlow packages
-IMAGE_INSTALL += " libedgetpu tensorflow-lite"
+IMAGE_INSTALL += " libedgetpu tensorflow-lite tflite-runtime"
 
 # Adaptive AUTOSAR packages
 IMAGE_INSTALL += " adaptive-autosar doip-lib obd2-emulator async-bsd-socket-lib \
@@ -81,7 +81,8 @@ IMAGE_INSTALL += " camera-streamer lane-detect-opencv yolov8n-demo-x11 \
 # Development tools or utils
 IMAGE_INSTALL += " glibc cmake gcc gcc-symlinks g++ g++-symlinks make automake \
         nano tree opencv-dev opencv-staticdev gtk+-dev gdb gdbserver \
-        npu-sdk-dev npu-bins adaptive-autosar-dev \
+        npu-sdk-dev npu-bins \
+        adaptive-autosar-dev \
         python3-dev \
 "
 
