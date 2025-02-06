@@ -7,6 +7,8 @@ import json
 from datetime import datetime
 
 
+# See the note above main function below.
+
 def read_local_conf(local_conf_path, key):
     """Reads the value of a specific key from the local.conf file."""
     try:
@@ -31,6 +33,8 @@ def create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_
     }
 
 
+# In addition to the command line arguments, this script also parses local.conf file
+# of each node of CarIQ platform.
 def main():
     if len(sys.argv) != 3:
         print("Usage: create-update-pkg.py <pkg_version> <cariq_node>")
