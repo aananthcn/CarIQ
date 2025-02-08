@@ -4,6 +4,7 @@ import os
 import sys
 import shutil
 import json
+import tarfile
 from datetime import datetime
 
 
@@ -22,15 +23,29 @@ def read_local_conf(local_conf_path, key):
     return None
 
 
-def create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, machine_name):
+def create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, bootfs_url, machine_name):
     """Creates the package manifest JSON."""
     return {
         "machine_nm": machine_name,
         "sw_version": sw_version,
         "url_kernel": kernel_url,
         "url_rootfs": rootfs_url,
+        "url_bootfs": bootfs_url,
         "allow_updt": "YES"
     }
+
+
+def create_bootfiles_tar(deploy_path, ota_pkg_folder):
+    """Creates a tarball of boot files for EN1 and EN2 nodes."""
+    bootfiles_path = os.path.join(deploy_path, "bootfiles")
+    bootfiles_tar = os.path.join(ota_pkg_folder, "bootfiles.tar.gz")
+
+    if os.path.exists(bootfiles_path):
+        with tarfile.open(bootfiles_tar, "w:gz") as tar:
+            tar.add(bootfiles_path, arcname="boot")
+        print(f"Boot files archived: {bootfiles_tar}")
+    else:
+        print("[ERROR]: Boot files directory not found, skipping tar creation.")
 
 
 # In addition to the command line arguments, this script also parses local.conf file
@@ -101,11 +116,16 @@ def main():
 
     shutil.copy(rootfs_file, os.path.join(ota_pkg_folder, rootfs_file_name))
 
+    # Create bootfiles tarball for EN1 and EN2
+    if cariq_node in ["en1", "en2"]:
+        create_bootfiles_tar(deploy_path, ota_pkg_folder)
+
     # Create ota-pkg-manifest.json
     kernel_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/"
     kernel_url += "kernel_2712.img" if cariq_node in ["en1", "en2"] else kernel_file_name
     rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/{rootfs_file_name}"
-    pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, machine_name)
+    bootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/bootfiles.tar.gz"
+    pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, bootfs_url, machine_name)
 
     with open(os.path.join(ota_pkg_folder, "ota-pkg-manifest.json"), 'w') as manifest_file:
         json.dump(pkg_manifest, manifest_file, indent=4)

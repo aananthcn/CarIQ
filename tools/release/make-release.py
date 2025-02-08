@@ -77,13 +77,14 @@ def create_release(cariq_node):
             sys.exit(1)
 
         # Determine the server path
-        server_path = f"/var/www/html/{ota_srv_url.split('/', 3)[-1]}/ota-pkg-{cariq_node}"
+        server_path_ota = f"/var/www/html/{ota_srv_url.split('/', 3)[-1]}/ota-pkg-{cariq_node}"
+        server_path_img = server_path_ota + "/../"
         
         # Delete old package (if exists, otherwise continue)
-        delete_old_package(server_path)
+        delete_old_package(server_path_ota)
         
         # Move new package to server location
-        move_package_to_server(release_folder, server_path)
+        move_package_to_server(release_folder, server_path_ota)
         
         # Determine image file name and path
         if cariq_node.lower() in ["en1", "en2"]:
@@ -94,7 +95,7 @@ def create_release(cariq_node):
         image_file_path = os.path.join(deploy_path, image_file_name)
         
         if os.path.exists(image_file_path):
-            copy_image_to_server(image_file_path, os.path.join(server_path, image_file_name))
+            copy_image_to_server(image_file_path, os.path.join(server_path_img, image_file_name))
         else:
             print(f"Warning: Image file not found at {image_file_path}, skipping image copy.")
         

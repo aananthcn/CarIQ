@@ -22,7 +22,9 @@ IMAGE_INSTALL = "\
 "
 
 # Infrastructure components
-IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted"
+IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
+        i2c-tools \
+"
 
 # Adding network manager for Edge Node
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"

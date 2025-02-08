@@ -33,7 +33,7 @@ def download_file(url, dest_path):
                 downloaded_size += len(chunk)
                 file.write(chunk)
                 print(f"Downloading... {downloaded_size / total_size:.2%} complete", end='\r')
-        print("Download complete.")
+        print("Download complete.                    \n")
 
     except requests.RequestException as e:
         print(f"Error: Failed to download {url}. {e}")
@@ -73,6 +73,8 @@ def main():
     manifest = read_config_file(manifest_path)
     manifest_sw_version = manifest.get("sw_version", "")
     allow_update = manifest.get("allow_updt", "").lower()
+    if cariq_node in ["en1", "en2"]:
+        url_bootfs = manifest.get("url_bootfs", "")
     url_kernel = manifest.get("url_kernel", "")
     url_rootfs = manifest.get("url_rootfs", "")
     manifest_machine_name = manifest.get("machine_nm", "")
@@ -90,9 +92,20 @@ def main():
         print("Error: Invalid URLs in manifest file.")
         exit(1)
 
+    if cariq_node in ["en1", "en2"] and not url_bootfs:
+        print("Error: Invalid URLs in manifest file.")
+        exit(1)
+
     if manifest_machine_name != config_machine_name:
         print(f"Error: Machine name mismatch. Config: {config_machine_name}, Manifest: {manifest_machine_name}")
         exit(1)
+
+    # Download bootfiles
+    if cariq_node in ["en1", "en2"]:
+        bootfs_filename = os.path.basename(url_bootfs)
+        bootfs_dest = os.path.join(DOWNLOAD_DIR, bootfs_filename)
+        print("Downloading bootfiles...")
+        download_file(url_bootfs, bootfs_dest)
 
     # Download kernel and rootfs using filenames from URLs
     kernel_filename = os.path.basename(url_kernel)

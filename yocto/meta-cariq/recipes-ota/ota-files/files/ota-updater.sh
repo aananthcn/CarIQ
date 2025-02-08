@@ -5,6 +5,7 @@ NEW_ROOT="/update"
 OLD_ROOT="/update/mnt"
 UPDATE_FLAG="/update/reboot_required.flag"
 LOG_FILE="/update/ota-update.log"
+OTA_BOOTFILES="/update/downloads/bootfiles.tar.gz"
 
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
@@ -109,6 +110,19 @@ else
     echo "Kernel update file not found: $KERNEL_UPDATE. Skipping kernel update." | tee -a "$LOG_FILE"
 fi
 
+# Check if OTA_BOOTFILES is present
+if [ -f "$OTA_BOOTFILES" ]; then
+    echo "Boot files archive found: $OTA_BOOTFILES" | tee -a "$LOG_FILE"
+    echo "Extracting boot files to /boot/..." | tee -a "$LOG_FILE"
+    pv "$OTA_BOOTFILES" | tar -xz -C / || {
+        echo "Boot files extraction failed. Exiting." | tee -a "$LOG_FILE"
+        exit 1
+    }
+    # Indicate that a reboot is required
+    touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
+
+    echo "Boot files successfully extracted." | tee -a "$LOG_FILE"
+fi
 
 # Reboot if the update flag exists
 if [ -f "$UPDATE_FLAG" ]; then
