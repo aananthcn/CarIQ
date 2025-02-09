@@ -88,9 +88,9 @@ def create_release(cariq_node):
         
         # Determine image file name and path
         if cariq_node.lower() in ["en1", "en2"]:
-            image_file_name = f"cariq-{cariq_node}-image-{machine_name}.rootfs.wic.bz2"
+            image_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.rootfs.wic.bz2"
         else:
-            image_file_name = f"cariq-{cariq_node}-image-{machine_name}.wic.bz2"
+            image_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.wic.bz2"
         
         image_file_path = os.path.join(deploy_path, image_file_name)
         

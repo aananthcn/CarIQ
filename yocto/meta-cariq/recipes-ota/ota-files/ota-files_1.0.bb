@@ -47,15 +47,15 @@ do_install() {
 
     case "${CARIQ_NODE}" in
         ccn)
-            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-ccn-image-khadas-vim3.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-ccn-nirvana-khadas-vim3.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
             echo "KERNEL_UPDATE=\"/update/downloads/fitImage\"" >> ${D}/etc/ota/ota-dlconf.sh
             ;;
         en1)
-            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en1-image-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en1-nirvana-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
             echo "KERNEL_UPDATE=\"/update/downloads/kernel_2712.img\"" >> ${D}/etc/ota/ota-dlconf.sh
             ;;
         en2)
-            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en2-image-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
+            echo "ROOTFS_UPDATE=\"/update/downloads/cariq-en2-nirvana-raspberrypi5.rootfs.tar.bz2\"" >> ${D}/etc/ota/ota-dlconf.sh
             echo "KERNEL_UPDATE=\"/update/downloads/kernel_2712.img\"" >> ${D}/etc/ota/ota-dlconf.sh
             ;;
         *)

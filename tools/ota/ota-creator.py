@@ -94,9 +94,9 @@ def main():
 
     # Determine rootfs file name based on cariq_node
     if cariq_node == "ccn":
-        rootfs_file_name = f"cariq-{cariq_node}-image-{machine_name}.tar.bz2"
+        rootfs_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.tar.bz2"
     else:
-        rootfs_file_name = f"cariq-{cariq_node}-image-{machine_name}.rootfs.tar.bz2"
+        rootfs_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.rootfs.tar.bz2"
 
     rootfs_file = os.path.join(deploy_path, rootfs_file_name)
 
