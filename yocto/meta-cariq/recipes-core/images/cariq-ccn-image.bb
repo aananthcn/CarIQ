@@ -22,10 +22,16 @@ IMAGE_INSTALL = "\
 "
 
 # Infrastructure components
-IMAGE_INSTALL += " pkgconf ldd-aarch64"
+IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
+        i2c-tools \
+"
 
 # Adding network manager for Compute Node
 IMAGE_INSTALL += "networkmanager network-manager-applet ufw"
+
+# Adding sound recipes
+IMAGE_INSTALL += " alsa-lib alsa-plugins alsa-utils alsa-tools flac \
+"
 
 # Adding graphics recipes
 IMAGE_INSTALL += " packagegroup-xfce-base libgl mesa mesa-demos xserver-xorg-extension-glx \
@@ -52,7 +58,8 @@ IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python3-pyproj python3-fiona python3-pandas python3-attrs python3-certifi \
         python3-packaging python3-numpy python3-pytz python3-dateutil \
         python3-charset-normalizer python3-idna python3-six \
-        python3-pyaudio \
+        python3-pyaudio python3-matplotlib python3-pydub python3-pyttsx3 \
+        python3-speech-recognition python3-whisper \
 "
 
 # ROS1 packages
