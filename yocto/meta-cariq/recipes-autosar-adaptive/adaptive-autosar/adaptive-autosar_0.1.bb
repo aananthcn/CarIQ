@@ -13,7 +13,7 @@ PV = "0.1+git${SRCPV}"
 DEPENDS = "cmake-native googletest async-bsd-socket-lib jsoncpp curl doip-lib obd2-emulator"
 
 # Inherit the CMake class to handle configuration and build steps
-inherit cmake
+inherit cmake systemd
 
 # Point to the correct source directory (for a git repository, typically "git")
 S = "${WORKDIR}/git"
@@ -23,6 +23,14 @@ EXTRA_OECMAKE += "-DCMAKE_CXX_STANDARD=14 -DCMAKE_CXX_STANDARD_REQUIRED=ON"
 EXTRA_OECMAKE += "-Dbuild_tests=OFF -DBUILD_SHARED_LIBS=ON"
 EXTRA_OECMAKE += "-DCMAKE_FIND_ROOT_PATH=${STAGING_DIR_TARGET}"
 
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI += "file://diag_mgr_manifest.arxml"
+SRC_URI += "file://exec_mgt_manifest.arxml"
+SRC_URI += "file://extd_veh_manifest.arxml"
+SRC_URI += "file://hlth_mon_manifest.arxml"
+SRC_URI += "file://adaptive_autosar.service"
 
 
 do_install() {
@@ -46,7 +54,20 @@ do_install() {
     # Install header files under ${includedir}/adaptive-autosar
     install -d ${D}${includedir}/adaptive-autosar
     find ${S}/src -type f -name "*.h" -exec install -m 0644 {} ${D}${includedir}/adaptive-autosar/ \;
+
+	# Install default autosar configurations
+    install -d ${D}${sysconfdir}/autosar
+	install -m 0644 ${WORKDIR}/*.arxml ${D}${sysconfdir}/autosar/
+
+	# Install SystemD services
+	install -d ${D}${systemd_system_unitdir}
+	install -m 0644 ${WORKDIR}/adaptive_autosar.service ${D}${systemd_system_unitdir}/adaptive_autosar.service
 }
+
+
+# To auto enable the services so that it goes inside /etc/systemd/system/multi-user.target.wants/
+SYSTEMD_SERVICE:${PN} = "adaptive_autosar.service"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 
 FILES:${PN} += "${libdir}/libara_com.so.0.1 \
@@ -73,6 +94,8 @@ FILES:${PN} += "${libdir}/libara_com.so.0.1 \
 	${libdir}/libarxml.so.0.1 \
 	${libdir}/libarxml.so.0 \
 	${libdir}/libarxml.so \
+	${sysconfdir}/autosar/* \
+	${systemd_unitdir}/system \
 "
 
 # Ensure the .so files do not end up in the dev package

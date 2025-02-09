@@ -1,0 +1,17 @@
+[Unit]
+Description=Adaptive AUTOSAR Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/adaptive_autosar /etc/autosar/exec_mgt_manifest.arxml /etc/autosar/extd_veh_manifest.arxml /etc/autosar/diag_mgr_manifest.arxml /etc/autosar/hlth_mon_manifest.arxml
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
