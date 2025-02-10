@@ -118,10 +118,16 @@ if [ -f "$OTA_BOOTFILES" ]; then
         echo "Boot files extraction failed. Exiting." | tee -a "$LOG_FILE"
         exit 1
     }
+
     # Indicate that a reboot is required
     touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
 
+    # Remove the boot files
+    echo "Deleting boot files: $OTA_BOOTFILES..." | tee -a "$LOG_FILE"
+    rm -f "$OTA_BOOTFILES" || { echo "Failed to delete $OTA_BOOTFILES. Exiting." | tee -a "$LOG_FILE"; exit 1; }
     echo "Boot files successfully extracted." | tee -a "$LOG_FILE"
+else
+    echo "Bootfs update file not found: $OTA_BOOTFILES. Skipping boot-files update." | tee -a "$LOG_FILE"
 fi
 
 # Reboot if the update flag exists

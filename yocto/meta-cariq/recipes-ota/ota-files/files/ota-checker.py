@@ -3,6 +3,7 @@
 import os
 import json
 import requests
+import argparse
 from pathlib import Path
 
 
@@ -46,6 +47,10 @@ def notify_user():
 
 
 def main():
+    parser = argparse.ArgumentParser(description="OTA Checker Script")
+    parser.add_argument("-f", "--force", action="store_true", help="Skip version check and force update check")
+    args = parser.parse_args()
+
     CONFIG_PATH = "/etc/ota/ota-config.json"
     DOWNLOAD_DIR = "/update/downloads"
 
@@ -80,24 +85,24 @@ def main():
     manifest_machine_name = manifest.get("machine_nm", "")
 
     # Validate manifest
-    if manifest_sw_version == current_sw_version:
-        print("No update required. Software version is up to date.")
+    if not args.force and manifest_sw_version == current_sw_version:
+        print("No update required. Software version is up to date.\n\n")
         exit(0)
 
     if allow_update not in ["yes", "true"]:
-        print("Update not allowed as per manifest configuration.")
+        print("Update not allowed as per manifest configuration.\n\n")
         exit(0)
 
     if not url_kernel or not url_rootfs:
-        print("Error: Invalid URLs in manifest file.")
+        print("Error: Invalid URLs in manifest file.\n\n")
         exit(1)
 
     if cariq_node in ["en1", "en2"] and not url_bootfs:
-        print("Error: Invalid URLs in manifest file.")
+        print("Error: Invalid URLs in manifest file.\n\n")
         exit(1)
 
     if manifest_machine_name != config_machine_name:
-        print(f"Error: Machine name mismatch. Config: {config_machine_name}, Manifest: {manifest_machine_name}")
+        print(f"Error: Machine name mismatch. Config: {config_machine_name}, Manifest: {manifest_machine_name}\n\n")
         exit(1)
 
     # Download bootfiles
@@ -126,7 +131,7 @@ def main():
     # Clean up the manifest file
     if os.path.exists(manifest_path):
         os.remove(manifest_path)
-        print("Cleaned up package manifest file.")
+        print("Cleaned up package manifest file.\n\n")
 
 
 if __name__ == "__main__":
