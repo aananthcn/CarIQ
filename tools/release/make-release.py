@@ -5,6 +5,7 @@ import sys
 import json
 import shutil
 import subprocess
+import argparse
 
 
 def validate_cariq_node(cariq_node):
@@ -54,7 +55,7 @@ def copy_image_to_server(source, destination):
 
 
 
-def create_release(cariq_node):
+def create_release(cariq_node, release_tag):
     try:
         script_path = os.path.dirname(os.path.abspath(__file__))
         build_path = os.path.abspath(os.path.join(script_path, "../..", f"build-{cariq_node}"))
@@ -72,9 +73,12 @@ def create_release(cariq_node):
             sys.exit(1)
 
         if not os.path.exists(release_folder):
-            print(f"Error: OTA package not found at {release_folder}. Please run ota-creator.py first.")
-            print("\nRelease operation failed.")
-            sys.exit(1)
+            print(f"OTA package not found at {release_folder}. Running ota-creator.py...")
+            subprocess.run(["../tools/ota/ota-creator.py", release_tag, cariq_node], check=True)
+            if not os.path.exists(release_folder):
+                print("Error: OTA package creation failed. Please check for errors.")
+                print("\nRelease operation failed.")
+                sys.exit(1)
 
         # Determine the server path
         server_path_ota = f"/var/www/html/{ota_srv_url.split('/', 3)[-1]}/ota-pkg-{cariq_node}"
@@ -108,14 +112,13 @@ def create_release(cariq_node):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: make-release.py <cariq_node>")
-        print("\nRelease operation failed.")
-        sys.exit(1)
-    cariq_node = sys.argv[1]
-    validate_cariq_node(cariq_node)
-    create_release(cariq_node)
+    parser = argparse.ArgumentParser(description="Create a release package for CarIQ nodes.")
+    parser.add_argument("-n", "--node", required=True, help="Specify the cariq_node (ccn, en1, en2)")
+    parser.add_argument("-r", "--release", required=True, help="Specify the release tag")
+    args = parser.parse_args()
 
+    validate_cariq_node(args.node)
+    create_release(args.node, args.release)
 
 
 if __name__ == "__main__":

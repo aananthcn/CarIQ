@@ -79,7 +79,8 @@ def main():
         sys.exit(1)
 
     if sw_version != pkg_version:
-        print("Error: pkg_version does not match CARIQ_SW_VERSION in local.conf.")
+        print(f"Error: release version ({pkg_version}) passed does not match CARIQ_SW_VERSION in local.conf.")
+        print(f"CARIQ_SW_VERSION in local.conf: {sw_version}. Either change local.conf file or pass correctly!")
         sys.exit(1)
 
     # Prepare update package folder
