@@ -40,7 +40,7 @@
  * Now build an ext4 image with contents from core-image-minimal. Here 'sudo' is needed because the script uses admin commands.
    * `sudo ../tools/ota/prepare-update-fs.sh enX`
  * Finally build the target image (the target image's .wks file would take the update.ext4 image)
-   * `bitbake cariq-enX-image`
+   * `bitbake cariq-enX-nirvana`
  * If the build(s) are successful, you can find the SD Card Image in following path:
    * `CarIQ/build-en1/tmp/deploy/images/raspberrypi5/cariq-en1-nirvana-raspberrypi5.rootfs.wic.bz2`
    * `CarIQ/build-en2/tmp/deploy/images/raspberrypi5/cariq-en2-nirvana-raspberrypi5.rootfs.wic.bz2`
