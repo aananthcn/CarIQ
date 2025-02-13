@@ -25,6 +25,50 @@ fi
 rm -f "$UPDATE_FLAG" | tee -a "$LOG_FILE"
 
 
+# Check if OTA_BOOTFILES is present
+if [ -f "$OTA_BOOTFILES" ]; then
+    echo "Boot files archive found: $OTA_BOOTFILES" | tee -a "$LOG_FILE"
+    echo "Extracting boot files to /boot/..." | tee -a "$LOG_FILE"
+    pv "$OTA_BOOTFILES" | tar --no-same-owner -xz -C / || {
+        echo "Boot files extraction failed. Exiting." | tee -a "$LOG_FILE"
+        exit 1
+    }
+
+    # Indicate that a reboot is required
+    touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
+
+    # Remove the boot files
+    echo "Deleting boot files: $OTA_BOOTFILES..." | tee -a "$LOG_FILE"
+    rm -f "$OTA_BOOTFILES" || { echo "Failed to delete $OTA_BOOTFILES. Exiting." | tee -a "$LOG_FILE"; exit 1; }
+    echo "Boot files successfully extracted." | tee -a "$LOG_FILE"
+else
+    echo "Bootfs update file not found: $OTA_BOOTFILES. Skipping boot-files update." | tee -a "$LOG_FILE"
+fi
+
+
+# Check if the Kernel update file exists
+if [ -f "$KERNEL_UPDATE" ]; then
+    echo "Kernel update file found: $KERNEL_UPDATE" | tee -a "$LOG_FILE"
+
+    # Update the kernel
+    echo "Updating kernel..." | tee -a "$LOG_FILE"
+    pv "$KERNEL_UPDATE" > /boot/fitImage || {
+        echo "Kernel update failed. Exiting." | tee -a "$LOG_FILE"
+        exit 1
+    }
+
+    # Indicate that a reboot is required
+    touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
+
+    # Remove the Kernel update file
+    echo "Deleting Kernel update file: $KERNEL_UPDATE..." | tee -a "$LOG_FILE"
+    rm -f "$KERNEL_UPDATE" || { echo "Failed to delete $KERNEL_UPDATE. Exiting." | tee -a "$LOG_FILE"; exit 1; }
+    echo "Kernel update complete." | tee -a "$LOG_FILE"
+else
+    echo "Kernel update file not found: $KERNEL_UPDATE. Skipping kernel update." | tee -a "$LOG_FILE"
+fi
+
+
 # Check if the RootFS update file exists
 if [ -f "$ROOTFS_UPDATE" ]; then
     echo "RootFS update file found: $ROOTFS_UPDATE" | tee -a "$LOG_FILE"
@@ -65,13 +109,6 @@ if [ -f "$ROOTFS_UPDATE" ]; then
             exit 1
         }
 
-        # Update /etc/fstab
-        echo "Updating /etc/fstab..." | tee -a "$LOG_FILE"
-        echo "UUID=a234f914-257f-4ae7-8ebf-614ddf817799       /update ext4    defaults        0       0" >> /mnt/etc/fstab || {
-            echo "Failed to update /etc/fstab. Exiting." | tee -a "$LOG_FILE"
-            exit 1
-        }
-
         echo "RootFS update complete." | tee -a "$LOG_FILE"
 EOF
     # Clean up the temporary file
@@ -87,48 +124,6 @@ else
     echo "RootFS update file not found: $ROOTFS_UPDATE. Skipping RootFS update." | tee -a "$LOG_FILE"
 fi
 
-
-# Check if the Kernel update file exists
-if [ -f "$KERNEL_UPDATE" ]; then
-    echo "Kernel update file found: $KERNEL_UPDATE" | tee -a "$LOG_FILE"
-
-    # Update the kernel
-    echo "Updating kernel..." | tee -a "$LOG_FILE"
-    pv "$KERNEL_UPDATE" > /boot/fitImage || {
-        echo "Kernel update failed. Exiting." | tee -a "$LOG_FILE"
-        exit 1
-    }
-
-    # Indicate that a reboot is required
-    touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
-
-    # Remove the Kernel update file
-    echo "Deleting Kernel update file: $KERNEL_UPDATE..." | tee -a "$LOG_FILE"
-    rm -f "$KERNEL_UPDATE" || { echo "Failed to delete $KERNEL_UPDATE. Exiting." | tee -a "$LOG_FILE"; exit 1; }
-    echo "Kernel update complete." | tee -a "$LOG_FILE"
-else
-    echo "Kernel update file not found: $KERNEL_UPDATE. Skipping kernel update." | tee -a "$LOG_FILE"
-fi
-
-# Check if OTA_BOOTFILES is present
-if [ -f "$OTA_BOOTFILES" ]; then
-    echo "Boot files archive found: $OTA_BOOTFILES" | tee -a "$LOG_FILE"
-    echo "Extracting boot files to /boot/..." | tee -a "$LOG_FILE"
-    pv "$OTA_BOOTFILES" | tar -xz -C / || {
-        echo "Boot files extraction failed. Exiting." | tee -a "$LOG_FILE"
-        exit 1
-    }
-
-    # Indicate that a reboot is required
-    touch "$UPDATE_FLAG" | tee -a "$LOG_FILE"
-
-    # Remove the boot files
-    echo "Deleting boot files: $OTA_BOOTFILES..." | tee -a "$LOG_FILE"
-    rm -f "$OTA_BOOTFILES" || { echo "Failed to delete $OTA_BOOTFILES. Exiting." | tee -a "$LOG_FILE"; exit 1; }
-    echo "Boot files successfully extracted." | tee -a "$LOG_FILE"
-else
-    echo "Bootfs update file not found: $OTA_BOOTFILES. Skipping boot-files update." | tee -a "$LOG_FILE"
-fi
 
 # Reboot if the update flag exists
 if [ -f "$UPDATE_FLAG" ]; then
