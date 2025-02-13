@@ -41,7 +41,7 @@ IMAGE_INSTALL += " packagegroup-xfce-base libgl mesa mesa-demos xserver-xorg-ext
 IMAGE_INSTALL += " systemd systemd-analyze systemd-serialgetty"
 
 # for camera streaming
-IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
+IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base libcamera libcamera-apps \
         gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
         gstreamer1.0-python v4l-utils libsdl2 ffmpeg \
