@@ -9,6 +9,8 @@ SRC_URI += "git://github.com/feranick/tensorflow.git;protocol=https;branch=r2.16
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
+DEPENDS += "rsync-native"
+
 S = "${WORKDIR}"
 
 do_compile() {
@@ -22,16 +24,11 @@ do_install() {
     install -m 0755 ${WORKDIR}/libtensorflowlite.so.${PV} ${D}${libdir}/libtensorflowlite.so.${PV}
     ln -sf libtensorflowlite.so.${PV} ${D}${libdir}/libtensorflowlite.so
 
-    # Install the header files
-    install -d ${D}${includedir}/tensorflow/lite
-    install -d ${D}${includedir}/tensorflow/lite/kernels
-    install -d ${D}${includedir}/tensorflow/lite/tools
-    install -d ${D}${includedir}/tensorflow/lite/delegates
-    cp -r ${S}/git/tensorflow/lite/*.h ${D}${includedir}/tensorflow/lite/
-    cp -r ${S}/git/tensorflow/lite/kernels/*.h ${D}${includedir}/tensorflow/lite/kernels/
-    cp -r ${S}/git/tensorflow/lite/tools/*.h ${D}${includedir}/tensorflow/lite/tools/
-    cp -r ${S}/git/tensorflow/lite/delegates/*.h ${D}${includedir}/tensorflow/lite/delegates/
+    # Install all TensorFlow Lite headers recursively, but exclude other files
+    install -d ${D}${includedir}/tensorflow
+    rsync -avm --include='*/' --include='*.h' --exclude='*' ${S}/git/tensorflow/lite/ ${D}${includedir}/tensorflow/lite/
 }
+
 
 FILES:${PN} = " \
     ${libdir}/libtensorflowlite.so \

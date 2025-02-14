@@ -18,7 +18,8 @@ inherit autotools
 TENSORFLOW_LITE_VER = "2.16.1"
 
 # Add TensorFlow Lite include and library paths
-TF_CXXFLAGS = " -I${WORKDIR}/../../tensorflow-lite/${TENSORFLOW_LITE_VER}/git"
+TF_CXXFLAGS = "-I${STAGING_DIR_TARGET}/usr/include/tensorflow"
+
 TF_LDFLAGS = " -ltensorflow-lite"
 
 DEBUG_PREFIX_MAP:remove = "-fcanon-prefix-map"

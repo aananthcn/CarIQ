@@ -23,7 +23,7 @@ IMAGE_INSTALL = "\
 
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
-        i2c-tools dtc \
+        i2c-tools dtc u-boot tigervnc \
 "
 
 # Adding network manager for Edge Node

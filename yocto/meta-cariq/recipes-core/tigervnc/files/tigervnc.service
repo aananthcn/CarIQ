@@ -1,0 +1,12 @@
+[Unit]
+Description=TigerVNC Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/x0vncserver -display :0 -passwordfile /home/root/.vnc/passwd
+
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
