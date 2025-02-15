@@ -23,7 +23,7 @@ IMAGE_INSTALL = "\
 
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
-        i2c-tools \
+        i2c-tools dtc u-boot tigervnc \
 "
 
 # Adding network manager for Edge Node
@@ -45,6 +45,10 @@ IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
         gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
         gstreamer1.0-libav x264 gstreamer1.0-rtsp-server gstreamer1.0-vaapi gst-devtools \
         gstreamer1.0-python v4l-utils libsdl2 ffmpeg \
+"
+
+# Raspberry pi specifics
+IMAGE_INSTALL += " libcamera libcamera-apps userland rpi-eeprom \
 "
 
 # for image processing, display libraries
