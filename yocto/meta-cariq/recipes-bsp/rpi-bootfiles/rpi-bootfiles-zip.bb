@@ -6,19 +6,20 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=ab1fd397d46ab12382201522b38a6b
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI = "git://github.com/raspberrypi/firmware.git;protocol=https;branch=master;name=firmware;destsuffix=git"
-SRCREV = "fe200a5b779d6369c05a845c650b62d5139d17ac"
+# Download the zip archive directly from GitHub
+SRC_URI = "https://github.com/raspberrypi/firmware/archive/fe200a5b779d6369c05a845c650b62d5139d17ac.zip;downloadfilename=firmware-fe200a5.zip"
+SRC_URI[sha256sum] = "892fbae9d202b3da98c4d55422883bd4d72846723e3bdbcd8e846b4ca34d0d51"
+
+# Set S to the directory created after extraction. GitHub typically extracts into:
+S = "${WORKDIR}/firmware-fe200a5b779d6369c05a845c650b62d5139d17ac"
+
+
 SRC_URI += "file://LICENSE"
 SRC_URI += "file://config.txt"
 
 
-GIT_SHALLOW = "1"
-GIT_SHALLOW_DEPTH = "1"
-GIT_SHALLOW_SINCE = ""
 
 inherit deploy nopackages
-
-S = "${WORKDIR}/git"
 
 do_install() {
     install -d ${D}/boot

@@ -3,7 +3,7 @@
 # Raspberry Pi. Boot files are located in the first vfat partition.
 
 # Boot partition (kernel image goes here)
-part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 512 --extra-space 0
+part /boot --source rootfs --rootfs-dir=${DEPLOY_DIR_IMAGE}/bootfiles --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 512 --extra-space 0
 
 # Update partition for OTA (fixed ~4 GB size)
 part /update --source rawcopy --fstype=ext4 --label update --align 4096 --size 4096 --sourceparams="file=update.ext4" --use-uuid --fsuuid a234f914-257f-4ae7-8ebf-614ddf817799
