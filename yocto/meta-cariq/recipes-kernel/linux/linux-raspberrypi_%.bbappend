@@ -2,6 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files-enx:"
 
 SRC_URI += "file://defconfig_enx"
 
+KBUILD_DEFCONFIG:forcevariable = "defconfig"
 
 do_configure:prepend() {
     # Ensure CarIQ's defconfig is used before kernel configuration starts

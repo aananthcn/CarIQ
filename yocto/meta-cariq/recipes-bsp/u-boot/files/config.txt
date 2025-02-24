@@ -1,0 +1,10 @@
+kernel=u-boot.bin
+enable_uart=1
+boot_delay=1
+gpu_mem=16
+arm_64bit=1
+disable_overscan=1
+dtoverlay=disable-bt
+dtparam=pciex1
+gpu_mem=128
+display_auto_detect=1
