@@ -1,3 +1,4 @@
+COMPATIBLE_MACHINE = "^rpi$"
 require recipes-kernel/linux/linux-raspberrypi.inc
 
 # Define the branch and source revision for the 6.12 kernel

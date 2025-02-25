@@ -30,7 +30,7 @@
  * Finally build the target image (the target image's .wks file would take the update.ext4 image)
    * `bitbake cariq-ccn-nirvana`
  * If the build is successful, you can find the SD Card Image in following path
-   * `./tmp/deploy/images/khadas-vim3/cariq-ccn-nirvana-khadas-vim3.wic.bz2`
+   * `CarIQ/build-ccn/tmp/deploy/images/khadas-vim3/cariq-ccn-nirvana-khadas-vim3.wic.bz2`
 
 ### Edge Node X (where, X = 1, 2)
  * `cd CarIQ/build-enX`

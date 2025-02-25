@@ -23,7 +23,7 @@ IMAGE_INSTALL = "\
 
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
-        i2c-tools dtc u-boot tigervnc \
+        i2c-tools dtc libgpiod-tools tigervnc \
 "
 
 # Adding network manager for Compute Node
@@ -35,6 +35,7 @@ IMAGE_INSTALL += " alsa-lib alsa-plugins alsa-utils alsa-tools flac \
 
 # Adding graphics recipes
 IMAGE_INSTALL += " packagegroup-xfce-base libgl mesa mesa-demos xserver-xorg-extension-glx \
+        ristretto \
 "
 
 # systemd is used as init manager for all nodes
@@ -100,3 +101,6 @@ IMAGE_ROOTFS_SIZE = "4194304"
 
 
 inherit core-image
+
+IMAGE_FSTYPES += "wic"
+WKS_FILES = "sdimage-cariq-ccn.wks"
