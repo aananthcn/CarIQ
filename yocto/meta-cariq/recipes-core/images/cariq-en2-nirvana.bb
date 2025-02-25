@@ -23,7 +23,7 @@ IMAGE_INSTALL = "\
 
 # Infrastructure components
 IMAGE_INSTALL += " pkgconf ldd-aarch64 e2fsprogs e2fsprogs-resize2fs parted gparted \
-        i2c-tools dtc u-boot tigervnc \
+        i2c-tools dtc libgpiod-tools tigervnc \
 "
 
 # Adding network manager for Edge Node
@@ -35,6 +35,7 @@ IMAGE_INSTALL += " alsa-lib alsa-plugins alsa-utils alsa-tools flac \
 
 # Adding graphics recipes
 IMAGE_INSTALL += " packagegroup-xfce-base libgl mesa mesa-demos xserver-xorg-extension-glx \
+        ristretto \
 "
 
 # systemd is used as init manager for all nodes
@@ -48,8 +49,8 @@ IMAGE_INSTALL += " gstreamer1.0 gstreamer1.0-plugins-base \
 "
 
 # Raspberry pi specifics
-IMAGE_INSTALL += " libcamera libcamera-apps userland rpi-eeprom \
-"
+IMAGE_INSTALL += " libcamera rpicam-apps userland rpi-eeprom "
+IMAGE_INSTALL:remove = "rpi-config"
 
 # for image processing, display libraries
 IMAGE_INSTALL += " jpeg opencv gtk+ gtk+3 libsm gobject-introspection"
@@ -106,3 +107,7 @@ IMAGE_ROOTFS_SIZE = "4194304"
 
 
 inherit core-image
+
+DEPENDS += "rpi-bootfiles"
+IMAGE_FSTYPES += "wic"
+WKS_FILES = "sdimage-cariq-en1.wks"
