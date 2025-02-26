@@ -51,27 +51,38 @@ def create_bootfiles_tar(deploy_path, ota_pkg_folder):
 # In addition to the command line arguments, this script also parses local.conf file
 # of each node of CarIQ platform.
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: create-update-pkg.py <pkg_version> <cariq_node>")
+    if len(sys.argv) != 4:
+        print("Usage: create-update-pkg.py <pkg_version> <cariq_node> <btype>")
+        print("btype options: nv (Nirvana) or ss (Samsara)")
         sys.exit(1)
 
     pkg_version = sys.argv[1]
     cariq_node = sys.argv[2]
+    btype = sys.argv[3]
     valid_nodes = ["ccn", "en1", "en2"]
+    valid_btypes = ["nv", "ss"]
 
     if cariq_node not in valid_nodes:
         print(f"Error: Invalid cariq_node. Valid options are: {', '.join(valid_nodes)}")
         sys.exit(1)
 
+    if btype not in valid_btypes:
+        print(f"Error: Invalid btype. Valid options are: {', '.join(valid_btypes)}")
+        sys.exit(1)
+
+    # Map abbreviated btype to expanded build type
+    build_type_expanded = "nirvana" if btype == "nv" else "samsara"
+
     # Determine paths
     script_path = os.path.dirname(os.path.abspath(__file__))
-    build_path = os.path.abspath(os.path.join(script_path, f"../..", f"build-{cariq_node}"))
+    build_path = os.path.abspath(os.path.join(script_path, f"../..", f"build-{btype}-{cariq_node}"))
     local_conf_path = os.path.join(build_path, "conf/local.conf")
+    release_cf_path = os.path.join(script_path, f"../release", "cariq-release.conf")
 
     # Read local.conf values
     machine_name = read_local_conf(local_conf_path, "MACHINE")
     deploy_path = os.path.join(build_path, f"tmp/deploy/images/{machine_name}")
-    sw_version = read_local_conf(local_conf_path, "CARIQ_SW_VERSION")
+    sw_version = read_local_conf(release_cf_path, "CARIQ_RELEASE_VER")
     ota_srv_url = read_local_conf(local_conf_path, "CARIQ_OTASRV_URL").rstrip('/')
 
     if not sw_version or not ota_srv_url or not machine_name:
@@ -80,11 +91,12 @@ def main():
 
     if sw_version != pkg_version:
         print(f"Error: release version ({pkg_version}) passed does not match CARIQ_SW_VERSION in local.conf.")
-        print(f"CARIQ_SW_VERSION in local.conf: {sw_version}. Either change local.conf file or pass correctly!")
+        print(f"CARIQ_SW_VERSION set is: {sw_version}. Either change cariq-release.conf file or pass correctly!")
         sys.exit(1)
 
-    # Prepare update package folder
-    ota_pkg_folder = os.path.join(deploy_path, f"ota-pkg-{cariq_node}")
+    # Define OTA package name and folder
+    ota_pkg_name = f"ota-pkg-{btype}-{cariq_node}"
+    ota_pkg_folder = os.path.join(deploy_path, ota_pkg_name)
     if os.path.exists(ota_pkg_folder):
         shutil.rmtree(ota_pkg_folder)
     os.makedirs(ota_pkg_folder)
@@ -93,11 +105,11 @@ def main():
     kernel_file_name = "fitImage" if cariq_node == "ccn" else "Image"
     kernel_file = os.path.join(deploy_path, kernel_file_name)
 
-    # Determine rootfs file name based on cariq_node
+    # Determine rootfs file name based on cariq_node and expanded build type
     if cariq_node == "ccn":
-        rootfs_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.tar.bz2"
+        rootfs_file_name = f"cariq-{cariq_node}-{build_type_expanded}-{machine_name}.tar.bz2"
     else:
-        rootfs_file_name = f"cariq-{cariq_node}-nirvana-{machine_name}.rootfs.tar.bz2"
+        rootfs_file_name = f"cariq-{cariq_node}-{build_type_expanded}-{machine_name}.rootfs.tar.bz2"
 
     rootfs_file = os.path.join(deploy_path, rootfs_file_name)
 
@@ -121,19 +133,18 @@ def main():
     if cariq_node in ["en1", "en2"]:
         create_bootfiles_tar(deploy_path, ota_pkg_folder)
 
-    # Create ota-pkg-manifest.json
-    kernel_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/"
+    # Create ota-pkg-manifest.json with updated URLs
+    kernel_url = f"{ota_srv_url}/{ota_pkg_name}/"
     kernel_url += "kernel_2712.img" if cariq_node in ["en1", "en2"] else kernel_file_name
-    rootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/{rootfs_file_name}"
-    bootfs_url = f"{ota_srv_url}/ota-pkg-{cariq_node}/bootfiles.tar.gz"
+    rootfs_url = f"{ota_srv_url}/{ota_pkg_name}/{rootfs_file_name}"
+    bootfs_url = f"{ota_srv_url}/{ota_pkg_name}/bootfiles.tar.gz"
     pkg_manifest = create_pkg_manifest(pkg_version, cariq_node, sw_version, kernel_url, rootfs_url, bootfs_url, machine_name)
 
     with open(os.path.join(ota_pkg_folder, "ota-pkg-manifest.json"), 'w') as manifest_file:
         json.dump(pkg_manifest, manifest_file, indent=4)
 
-    # Move package to deploy_path
-    dest_folder = os.path.join(deploy_path, f"ota-pkg-{cariq_node}")
-
+    # Move package to deploy_path with abbreviated btype
+    dest_folder = os.path.join(deploy_path, ota_pkg_name)
     shutil.move(ota_pkg_folder, dest_folder)
 
     print(f"Update package for {cariq_node} created successfully at {dest_folder}.")
