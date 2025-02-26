@@ -10,6 +10,7 @@ SRC_URI = "git://github.com/raspberrypi/firmware.git;protocol=https;branch=maste
 SRCREV = "fe200a5b779d6369c05a845c650b62d5139d17ac"
 SRC_URI += "file://LICENSE"
 SRC_URI += "file://config.txt"
+SRC_URI += "file://cmdline.txt"
 
 
 GIT_SHALLOW = "1"
@@ -27,7 +28,7 @@ do_install() {
     install -m 0644 ${S}/boot/*.dat ${D}/boot/
     install -m 0644 ${S}/boot/bcm2712*.dtb ${D}/boot/
     install -m 0644 ${S}/boot/LICEN* ${D}/boot/
-    install -m 0644 ${WORKDIR}/config.txt ${D}/boot/
+    install -m 0644 ${WORKDIR}/c*.txt ${D}/boot/
 
     # Install overlays into /boot/overlays/
     install -d ${D}/boot/overlays
@@ -54,7 +55,11 @@ do_deploy() {
     install -m 0644 ${DEPLOY_DIR_IMAGE}/Image ${DEPLOYDIR}/bootfiles/kernel_2712.img
 }
 
+
+do_deploy[depends] += "virtual/kernel:do_deploy"
+
 addtask do_deploy before do_build after do_install
+
 
 FILES:${PN} = "/boot/* /boot/overlays/*.dtbo"
 

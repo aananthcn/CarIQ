@@ -1,6 +1,7 @@
 downloads
 sstate-cache
 tmp
+tmp*
 cache
 build
 pn-buildlist

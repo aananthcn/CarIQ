@@ -16,6 +16,7 @@ S = "${WORKDIR}/firmware-fe200a5b779d6369c05a845c650b62d5139d17ac"
 
 SRC_URI += "file://LICENSE"
 SRC_URI += "file://config.txt"
+SRC_URI += "file://cmdline.txt"
 
 
 
@@ -28,7 +29,7 @@ do_install() {
     install -m 0644 ${S}/boot/*.dat ${D}/boot/
     install -m 0644 ${S}/boot/bcm2712*.dtb ${D}/boot/
     install -m 0644 ${S}/boot/LICEN* ${D}/boot/
-    install -m 0644 ${WORKDIR}/config.txt ${D}/boot/
+    install -m 0644 ${WORKDIR}/c*.txt ${D}/boot/
 
     # Install overlays into /boot/overlays/
     install -d ${D}/boot/overlays
