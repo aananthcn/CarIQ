@@ -3,7 +3,7 @@ DESCRIPTION = "CarIQ SD Card Image for Amlogic Meson SoCs"
 COMPATIBLE_MACHINE = "^khadas-vim3$"
 
 require cariq-base.inc
-require cariq-nirvana.inc
+require cariq-samsara.inc
 
 
 IMAGE_INSTALL += "\

@@ -5,17 +5,23 @@ set -e
 # Constants
 IMAGE_FILE="update.ext4"
 IMAGE_SIZE_MB=4032
-ROOTFS_ARCHIVE="core-image-minimal-khadas-vim3.tar.bz2"
 
-# Check and validate argument
-if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 <ccn|en1|en2|CCN|EN1|EN2>"
+# Check and validate arguments
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <ccn|en1|en2|CCN|EN1|EN2> <nv|ss>"
     exit 1
 fi
 
-ARG=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-if [[ "$ARG" != "ccn" && "$ARG" != "en1" && "$ARG" != "en2" ]]; then
-    echo "Invalid argument. Must be one of: ccn, en1, en2 (case-insensitive)"
+ARG1=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+ARG2=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+
+if [[ "$ARG1" != "ccn" && "$ARG1" != "en1" && "$ARG1" != "en2" ]]; then
+    echo "Invalid first argument. Must be one of: ccn, en1, en2 (case-insensitive)"
+    exit 1
+fi
+
+if [[ "$ARG2" != "nv" && "$ARG2" != "ss" ]]; then
+    echo "Invalid second argument. Must be either 'nv' (Nirvana) or 'ss' (Samsara)"
     exit 1
 fi
 
@@ -23,20 +29,16 @@ fi
 SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
 # Set variables based on argument
-case "$ARG" in
+MACHINE=""
+case "$ARG1" in
     "ccn")
         MACHINE="khadas-vim3"
-        DEPLOY_DIR="${SCRIPT_DIR}/../../build-ccn/tmp/deploy/images/${MACHINE}"
+        DEPLOY_DIR="${SCRIPT_DIR}/../../build-${ARG2}-${ARG1}/tmp/deploy/images/${MACHINE}"
         ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.tar.bz2"
         ;;
-    "en1")
+    "en1" | "en2")
         MACHINE="raspberrypi5"
-        DEPLOY_DIR="${SCRIPT_DIR}/../../build-en1/tmp/deploy/images/${MACHINE}"
-        ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.rootfs.tar.bz2"
-        ;;
-    "en2")
-        MACHINE="raspberrypi5"
-        DEPLOY_DIR="${SCRIPT_DIR}/../../build-en2/tmp/deploy/images/${MACHINE}"
+        DEPLOY_DIR="${SCRIPT_DIR}/../../build-${ARG2}-${ARG1}/tmp/deploy/images/${MACHINE}"
         ROOTFS_ARCHIVE_PATH="${DEPLOY_DIR}/core-image-minimal-${MACHINE}.rootfs.tar.bz2"
         ;;
 esac

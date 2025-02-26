@@ -61,10 +61,9 @@ IMAGE_INSTALL += " python3 python3-pip python3-pygobject python3-numpy \
         python3-speech-recognition python3-whisper \
 "
 
-# ROS1 packages
-IMAGE_INSTALL += "ros-core packagegroup-ros1-comm ros-environment roslaunch \
-        std-msgs console-bridge boost poco openssl gpgme log4cxx lz4 bzip2 \
-        roscpp-tutorials gdal \
+# ROS packages
+IMAGE_INSTALL += "std-msgs console-bridge boost poco openssl gpgme log4cxx lz4 bzip2 \
+        gdal \
 "
 
 # OTA packages
