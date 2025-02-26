@@ -113,7 +113,7 @@ def main():
     # Step 3: Release all folders
     print("\nStarting release process for all folders...")
     for folder in BUILD_FOLDERS:
-        print(f"\nProcessing release for: {folder}")
+        print(f"\n\n\nProcessing release for: {folder}")
         release_folder(folder, release_text)
     print("\nAll releases completed successfully!")
 

@@ -55,9 +55,10 @@ def create_release(cariq_node, release_tag, btype):
         script_path = os.path.dirname(os.path.abspath(__file__))
         build_path = os.path.abspath(os.path.join(script_path, "../../", f"build-{btype}-{cariq_node}"))
         local_conf_path = os.path.join(build_path, "conf/local.conf")
+        release_cf_path = os.path.join(script_path, f"../release", "cariq-release.conf")
 
         # Read configurations
-        ota_srv_url = read_local_conf(local_conf_path, "CARIQ_OTASRV_URL").rstrip('/')
+        ota_srv_url = read_local_conf(release_cf_path, "CARIQ_RELEASE_URL").rstrip('/')
         machine_name = read_local_conf(local_conf_path, "MACHINE")
         deploy_path = os.path.join(build_path, "tmp/deploy/images", machine_name)
 
@@ -66,7 +67,7 @@ def create_release(cariq_node, release_tag, btype):
         release_folder = os.path.join(deploy_path, ota_pkg_name)
 
         if not ota_srv_url or not machine_name:
-            print("Error: Missing CARIQ_OTASRV_URL or MACHINE in local.conf.")
+            print("Error: Missing CARIQ_RELEASE_URL or MACHINE in local.conf.")
             print("\nRelease operation failed.")
             sys.exit(1)
 

@@ -58,6 +58,7 @@ def main():
     config = read_config_file(CONFIG_PATH)
     server_url = config.get("server_url", "").rstrip('/')
     cariq_node = config.get("cariq_node", "")
+    build_type = config.get("build_type", "")
     current_sw_version = config.get("sw_version", "")
     config_machine_name = config.get("machine_nm", "")
 
@@ -65,9 +66,14 @@ def main():
         print("Error: Invalid or incomplete configuration file.")
         exit(1)
 
+    if build_type == "nirvana":
+        btype = "nv"
+    else:
+        btype = "ss"
+
     # Construct the manifest URL
     print("Preparing to download the manifest file...")
-    manifest_url = f"{server_url}/ota-pkg-{cariq_node}/ota-pkg-manifest.json"
+    manifest_url = f"{server_url}/ota-pkg-{btype}-{cariq_node}/ota-pkg-manifest.json"
 
     # Download the manifest file
     manifest_path = os.path.join(DOWNLOAD_DIR, "ota-pkg-manifest.json")

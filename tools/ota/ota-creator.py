@@ -83,7 +83,7 @@ def main():
     machine_name = read_local_conf(local_conf_path, "MACHINE")
     deploy_path = os.path.join(build_path, f"tmp/deploy/images/{machine_name}")
     sw_version = read_local_conf(release_cf_path, "CARIQ_RELEASE_VER")
-    ota_srv_url = read_local_conf(local_conf_path, "CARIQ_OTASRV_URL").rstrip('/')
+    ota_srv_url = read_local_conf(release_cf_path, "CARIQ_RELEASE_URL").rstrip('/')
 
     if not sw_version or not ota_srv_url or not machine_name:
         print("Error: Missing required values in local.conf.")
