@@ -29,6 +29,12 @@
 			"git":"https://github.com/ros/meta-ros.git",
 			"branch":"scarthgap",
 			"comment":"This layer contains recipes to integrate Robotic Operating Systems"
+		},
+		{
+			"repo":"meta-ara",
+			"git":"http://cargitlab.embitel.local/AAS/meta-ara.git",
+			"branch":"main",
+			"comment":"This layer recipes to build Adaptive AUTOSAR from consortium"
 		}
 	]
 }
