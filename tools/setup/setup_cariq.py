@@ -34,9 +34,19 @@ def clone_repo(repo_path, git_url, branch):
 def checkout_branch(repo_path, branch):
     print(f"Checking out branch '{branch}' in repository {repo_path}...")
     try:
-        subprocess.run(["git", "checkout", branch], cwd=repo_path, check=True)
-    except subprocess.CalledProcessError:
-        print(f"Error: Failed to checkout branch '{branch}' in {repo_path}.")
+        # Fetch the specific branch from origin
+        subprocess.run(["git", "fetch", "origin", branch], cwd=repo_path, check=True)
+        # Check if the branch already exists locally
+        result = subprocess.run(["git", "branch", "--list", branch], cwd=repo_path, capture_output=True, text=True)
+        if branch in result.stdout:
+            # Branch exists, checkout and update it
+            subprocess.run(["git", "checkout", branch], cwd=repo_path, check=True)
+            subprocess.run(["git", "pull", "origin", branch], cwd=repo_path, check=True)
+        else:
+            # Branch doesn't exist, create and track it from FETCH_HEAD
+            subprocess.run(["git", "checkout", "-b", branch, "FETCH_HEAD"], cwd=repo_path, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: Failed to checkout branch '{branch}' in {repo_path}: {e}")
         sys.exit(1)
 
 
@@ -59,7 +69,7 @@ def main():
     )
     parser.add_argument(
         "-j", "--json-file",
-        help="Path to the JSON file containing layer information (with 'layers' array of 'repo', 'git', and 'branch').",
+        help="Path to the JSON file containing layer information (with 'layers' array of 'repo', 'git', 'branch', and 'type').",
         required=True
     )
     parser.add_argument(
@@ -93,23 +103,35 @@ def main():
         print_usage(parser)
         sys.exit(1)
 
-    # Check for the "yocto" folder in the current directory
-    if not os.path.isdir("yocto"):
-        print("Creating directory 'yocto'...")
-        os.makedirs("yocto", exist_ok=True)
+    # Valid types
+    valid_types = {"yocto-layer", "yocto-shared"}
 
     # Loop through each layer
     for layer in data["layers"]:
-        if not all(k in layer for k in ("repo", "git", "branch")):
-            print("Error: Each layer must contain 'repo', 'git', and 'branch' properties.")
+        # Check required fields including 'type'
+        required_fields = {"repo", "git", "branch", "type"}
+        if not all(k in layer for k in required_fields):
+            print(f"Error: Each layer must contain {', '.join(required_fields)} properties.")
             sys.exit(1)
 
         repo_name = layer["repo"]
         git_url = layer["git"]
         branch = layer["branch"]
+        layer_type = layer["type"]
 
-        # Repository path is always in ./yocto
-        repo_path = os.path.join("yocto", repo_name)
+        # Validate type value
+        if layer_type not in valid_types:
+            print(f"Error: Invalid 'type' value '{layer_type}' for repository '{repo_name}'. Must be one of {', '.join(valid_types)}.")
+            sys.exit(1)
+
+        # Determine base directory based on type
+        base_dir = f"./{layer_type}"
+        repo_path = os.path.join(base_dir, repo_name)
+
+        # Create base directory if it doesn't exist
+        if not os.path.isdir(base_dir):
+            print(f"Creating directory '{base_dir}'...")
+            os.makedirs(base_dir, exist_ok=True)
 
         # Check if the repository folder already exists at the final path
         if os.path.isdir(repo_path):

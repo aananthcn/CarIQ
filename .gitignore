@@ -11,9 +11,13 @@ workspace
 # Ignore these yocto layers
 yocto/poky
 yocto/meta-*
+yocto-layer/poky
+yocto-layer/meta-*
+yocto-shared/*
 
 # But do not ignore these yocto layers
 !meta-cariq
+!yocto-shared/README.md
 
 *.log
 *.lock

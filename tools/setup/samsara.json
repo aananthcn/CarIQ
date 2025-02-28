@@ -3,38 +3,51 @@
 		{
 			"repo": "meta-meson",
 			"git": "https://github.com/superna9999/meta-meson.git",
-			"branch": "kirkstone",
+			"branch": "scarthgap",
+			"type": "yocto-layer",
 			"comment": "For Khadas VIM3 as well as VIM4 machine configs"
 		},
 		{
 			"repo": "meta-openembedded",
 			"git": "git://git.openembedded.org/meta-openembedded",
-			"branch": "kirkstone",
+			"branch": "scarthgap",
+			"type": "yocto-layer",
 			"comment": "For Graphics, Networking, Multimedia, Python, ..."
 		},
 		{
 			"repo": "poky",
 			"git": "git://git.yoctoproject.org/poky",
-			"branch": "kirkstone",
+			"branch": "scarthgap",
+			"type": "yocto-layer",
 			"comment": "The Yocto basic layer"
 		},
 		{
 			"repo":"meta-raspberrypi",
 			"git":"https://github.com/agherzan/meta-raspberrypi.git",
-			"branch":"kirkstone",
+			"branch":"scarthgap",
+			"type": "yocto-layer",
 			"comment":"For RPi5/4/3's machine configs"
 		},
 		{
 			"repo":"meta-ros",
 			"git":"https://github.com/ros/meta-ros.git",
-			"branch":"kirkstone",
+			"branch":"scarthgap",
+			"type": "yocto-layer",
 			"comment":"This layer contains recipes to integrate Robotic Operating Systems"
 		},
 		{
 			"repo":"meta-ara",
 			"git":"http://cargitlab.embitel.local/AAS/meta-ara.git",
-			"branch":"main",
+			"branch":"cariq",
+			"type": "yocto-layer",
 			"comment":"This layer recipes to build Adaptive AUTOSAR from consortium"
+		},
+		{
+			"repo":"ara-api",
+			"git":"http://cargitlab.embitel.local/AAS/ara-api.git",
+			"branch":"main",
+			"type": "yocto-shared",
+			"comment":"This is not a layer, but source code of Adaptive AUTOSAR from consortium"
 		}
 	]
 }
