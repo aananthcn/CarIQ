@@ -1,0 +1,1 @@
+This folder contains all common code, packages that needs to be built into different images.
