@@ -16,7 +16,10 @@
 		* `export LANG=en_US.UTF-8`
  * `git clone https://github.com/aananthcn/CarIQ.git`
  * `cd CarIQ`
- * `python tools/setup_cariq.py yocto/layers.json`
+ * To setup Nirvana build, run
+    * `python tools/setup/setup_cariq.py -j ./tools/setup/nirvana.json`
+ * To setup Samsara build, run
+    * `python tools/setup/setup_cariq.py -j ./tools/setup/samsara.json`
 
 
  ## Build images
