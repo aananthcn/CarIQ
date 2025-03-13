@@ -73,9 +73,8 @@ IMAGE_INSTALL += " pv ota-files lsof \
 # NPU / TensorFlow packages
 IMAGE_INSTALL += " libedgetpu tensorflow-lite tflite-runtime"
 
-# Adaptive AUTOSAR packages
-IMAGE_INSTALL += " adaptive-autosar doip-lib obd2-emulator async-bsd-socket-lib \
-        jsoncpp curl pugixml \
+# Adaptive AUTOSAR common packages
+IMAGE_INSTALL += " jsoncpp curl pugixml \
 "
 
 # CarIQ Apps

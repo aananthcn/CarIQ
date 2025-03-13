@@ -36,6 +36,13 @@
 			"comment":"This layer contains recipes to integrate Robotic Operating Systems"
 		},
 		{
+			"repo":"meta-opendds",
+			"git":"https://github.com/OpenDDS/meta-opendds.git",
+			"branch":"master",
+			"type": "yocto-layer",
+			"comment":"Recipes for Data Distribution Service (DDS)"
+		},
+		{
 			"repo":"meta-ara",
 			"git":"http://cargitlab.embitel.local/AAS/meta-ara.git",
 			"branch":"cariq",
@@ -48,6 +55,13 @@
 			"branch":"main",
 			"type": "yocto-shared",
 			"comment":"This is not a layer, but source code of Adaptive AUTOSAR from consortium"
+		},
+		{
+			"repo":"sample-applications",
+			"git":"http://cargitlab.embitel.local/AAS/sample-applications.git",
+			"branch":"main",
+			"type": "yocto-shared",
+			"comment":"This is not a layer, sample Adative AUTOSAR applications from consortium"
 		}
 	]
 }
