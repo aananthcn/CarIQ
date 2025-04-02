@@ -1,0 +1,53 @@
+{
+	"layers" : [ 
+		{
+			"repo": "meta-openembedded",
+			"git": "git://git.openembedded.org/meta-openembedded",
+			"branch": "kirkstone",
+			"type": "yocto-layer",
+			"comment": "For Graphics, Networking, Multimedia, Python, ..."
+		},
+		{
+			"repo": "poky",
+			"git": "git://git.yoctoproject.org/poky",
+			"branch": "kirkstone",
+			"type": "yocto-layer",
+			"comment": "The Yocto basic layer"
+		},
+		{
+			"repo":"meta-raspberrypi",
+			"git":"https://github.com/agherzan/meta-raspberrypi.git",
+			"branch":"kirkstone",
+			"type": "yocto-layer",
+			"comment":"For RPi5/4/3's machine configs"
+		},
+		{
+			"repo":"meta-opendds",
+			"git":"https://github.com/OpenDDS/meta-opendds.git",
+			"branch":"master",
+			"type": "yocto-layer",
+			"comment":"Recipes for Data Distribution Service (DDS)"
+		},
+		{
+			"repo":"meta-ara",
+			"git":"http://cargitlab.embitel.local/AAS/meta-ara.git",
+			"branch":"cariq",
+			"type": "yocto-layer",
+			"comment":"This layer recipes to build Adaptive AUTOSAR from consortium"
+		},
+		{
+			"repo":"ara-api",
+			"git":"http://cargitlab.embitel.local/AAS/ara-api.git",
+			"branch":"cariq",
+			"type": "yocto-shared",
+			"comment":"This is not a layer, but source code of Adaptive AUTOSAR from consortium"
+		},
+		{
+			"repo":"sample-applications",
+			"git":"http://cargitlab.embitel.local/AAS/sample-applications.git",
+			"branch":"main",
+			"type": "yocto-shared",
+			"comment":"This is not a layer, sample Adative AUTOSAR applications from consortium"
+		}
+	]
+}

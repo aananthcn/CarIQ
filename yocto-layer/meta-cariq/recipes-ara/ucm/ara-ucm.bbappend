@@ -5,15 +5,18 @@ LIC_FILES_CHKSUM = "file://ucm/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
 
 DEPENDS += "boost python3-lxml-native python3-jinja2-native dlt-daemon \
     rapidjson jansson poco pcre2 libpcre2 libcgroup vsomeip gperf-native  \
-    opendds opendds-native gperf-native \
+    opendds opendds-native gperf-native botan \
 "
 
+CXXFLAGS:append = " -std=c++17"
 EXTRA_OECMAKE += "\
     -Wno-error \
     -DGTEST_FOUND=OFF \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DCMAKE_CXX_EXTENSIONS=OFF \
     -DCMAKE_INSTALL_PREFIX=${D}/usr \
     -DCMAKE_INSTALL_BINDIR=bin \
-    -DCMAKE_MODULE_PATH=${STAGING_DIR_TARGET}/usr/share/cmake-3.28/Modules \
     -DCMAKE_LIBRARY_PATH=${STAGING_LIBDIR} \
     -DBoost_NO_SYSTEM_PATHS=TRUE \
     -DBOOST_ROOT=${STAGING_DIR_TARGET}/usr \
@@ -32,7 +35,9 @@ EXTRA_OECMAKE += "\
     -DOpenDDS_DIR=${STAGING_DIR_TARGET}/usr/share/cmake/OpenDDS \
     -DACE_ROOT=${STAGING_DIR_TARGET}/usr/share/ace \
     -DOPENDDS_TAO_IDL=${STAGING_DIR_TARGET}/usr/bin/tao_idl \
+    -DCMAKE_MODULE_PATH=${STAGING_DIR_NATIVE}/usr/share/cmake/Modules;${STAGING_DIR_NATIVE}/usr/share/cmake-3.28/Modules \
 "
+
 
 do_configure:prepend() {
     mkdir -p ${STAGING_DIR_NATIVE}/usr/bin/ara-gen
