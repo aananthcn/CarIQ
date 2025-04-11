@@ -1,13 +1,18 @@
 EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/ara-api"
 FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/ara-api/:"
 
-
-DEPENDS += "apd-cmake-modules-native"
+LIC_FILES_CHKSUM = "file://apd/minimal-machine/interfaces/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
 
 do_configure() {
-    cmake -S ${S} -B ${B} -DCMAKE_INSTALL_PREFIX=${D}/usr ${EXTRA_OECMAKE}
+    cmake -S ${S}/apd/minimal-machine/interfaces -B ${B} \
+        -GNinja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
+        -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
+        ${EXTRA_OECMAKE}
 }
 
-do_install() {
-    cmake --build ${B} --target install DESTDIR=${D}
-}
+FILES:${PN} += " \
+    ${datadir}/apd-minimalmachine-interfaces-arxmls \
+    ${datadir}/apd-minimalmachine-interfaces-arxmls/*.arxml \
+"
