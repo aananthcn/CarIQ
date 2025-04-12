@@ -6,9 +6,13 @@ LIC_FILES_CHKSUM = "file://com/libe2exf/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7
 do_configure() {
     cmake -S ${S}/com/libe2exf -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
         -DCMAKE_PREFIX_PATH=${WORKDIR}/recipe-sysroot/usr \
         ${EXTRA_OECMAKE}
 }
+
+FILES:${PN} = " \
+    /opt \
+"

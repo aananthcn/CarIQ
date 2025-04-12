@@ -8,8 +8,12 @@ DEPENDS += "apd-cmake-modules-native"
 do_configure() {
     cmake -S ${S}/applications -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/../ara-api/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
+
+FILES:${PN} = " \
+    /opt \
+"

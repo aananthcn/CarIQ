@@ -6,13 +6,13 @@ LIC_FILES_CHKSUM = "file://apd/wrsomeip/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7
 do_configure() {
     cmake -S ${S}/apd/wrsomeip -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/../ara-api/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
 
 FILES:${PN} += " \
-    /usr/etc \
-    /usr/etc/wrsomeip \
+    /opt/etc \
+    /opt/etc/wrsomeip \
 "

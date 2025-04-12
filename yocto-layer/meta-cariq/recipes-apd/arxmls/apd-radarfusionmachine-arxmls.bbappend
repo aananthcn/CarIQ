@@ -8,7 +8,11 @@ LIC_FILES_CHKSUM = "file://machines/RadarFusionMachine/model/LICENSE;md5=b64e97d
 do_configure() {
     cmake -S ${S}/machines/RadarFusionMachine/model -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         ${EXTRA_OECMAKE}
 }
+
+FILES:${PN} = " \
+    /opt \
+"

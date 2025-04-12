@@ -6,8 +6,12 @@ LIC_FILES_CHKSUM = "file://apd/manifestreader/LICENSE;md5=b64e97d3c7b53b1c5789d6
 do_configure() {
     cmake -S ${S}/apd/manifestreader -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
+
+FILES:${PN} = " \
+    /opt \
+"

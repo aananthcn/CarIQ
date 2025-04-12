@@ -8,8 +8,13 @@ LIC_FILES_CHKSUM = "file://apd/minimal-machine/machines/common/LICENSE;md5=b64e9
 do_configure() {
     cmake -S ${S}/apd/minimal-machine/machines/common -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
+
+
+FILES:${PN} = " \
+    /opt \
+"

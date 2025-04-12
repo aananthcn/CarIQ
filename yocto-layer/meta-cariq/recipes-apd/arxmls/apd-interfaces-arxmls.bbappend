@@ -6,13 +6,18 @@ LIC_FILES_CHKSUM = "file://apd/minimal-machine/interfaces/LICENSE;md5=b64e97d3c7
 do_configure() {
     cmake -S ${S}/apd/minimal-machine/interfaces -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
 
-FILES:${PN} += " \
-    ${datadir}/apd-minimalmachine-interfaces-arxmls \
-    ${datadir}/apd-minimalmachine-interfaces-arxmls/*.arxml \
+# FILES:${PN} += " \
+#     ${datadir}/apd-minimalmachine-interfaces-arxmls \
+#     ${datadir}/apd-minimalmachine-interfaces-arxmls/*.arxml \
+# "
+
+
+FILES:${PN} = " \
+    /opt \
 "

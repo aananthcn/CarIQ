@@ -8,8 +8,12 @@ DEPENDS += "apd-cmake-modules-native python3-native python3-lxml-native python3 
 do_configure() {
     cmake -S ${S}/adi/sensoritf/arxmls -B ${B} \
         -GNinja \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/../ara-api/apd/apd-cmake-modules/src \
         ${EXTRA_OECMAKE}
 }
+
+FILES:${PN} = " \
+    /opt \
+"
