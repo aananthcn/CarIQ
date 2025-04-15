@@ -1,7 +1,7 @@
 EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/ara-api"
 FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/ara-api/:"
 
-DEPENDS += "apd-cmake-modules-native"
+DEPENDS += "apd-cmake-modules-native apd-manifestreader ara-core-types ara-log"
 
 LIC_FILES_CHKSUM = "file://core/core/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
 
@@ -17,3 +17,11 @@ do_configure() {
 FILES:${PN} = " \
     /opt \
 "
+
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
+
+INSANE_SKIP:${PN} += "staticdev"

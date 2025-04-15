@@ -13,6 +13,16 @@ do_configure() {
 }
 
 FILES:${PN} += " \
-    /opt/etc \
-    /opt/etc/fstab_from_meta \
+    /opt \
 "
+
+INSANE_SKIP:${PN} += "staticdev"
+
+RDEPENDS:${PN} += "bash"
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}

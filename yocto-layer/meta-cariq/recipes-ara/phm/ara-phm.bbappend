@@ -1,2 +1,28 @@
 EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/ara-api"
 FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/ara-api/:"
+
+LIC_FILES_CHKSUM = "file://phm/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
+
+DEPENDS += "apd-manifestreader ara-core ara-exec ara-log boost gtest"
+
+do_configure() {
+    cmake -S ${S}/phm -B ${B} \
+        -GNinja \
+        -DCMAKE_INSTALL_PREFIX=/opt \
+        -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
+        -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
+        ${EXTRA_OECMAKE}
+}
+
+FILES:${PN} = " \
+    /opt \
+"
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
+
+INSANE_SKIP:${PN} += "staticdev"

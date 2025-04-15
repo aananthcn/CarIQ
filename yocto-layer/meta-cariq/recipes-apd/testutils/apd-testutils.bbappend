@@ -14,21 +14,21 @@ do_configure() {
         ${EXTRA_OECMAKE}
 }
 
-do_install:append() {
-    install -d ${D}/opt/lib/cmake/apd-testutils
-    cat << EOF > ${D}/opt/lib/cmake/apd-testutils/apd-testutilsConfig.cmake
-# apd-testutils CMake configuration file
-if(NOT TARGET apd-testutils)
-    add_library(apd-testutils INTERFACE IMPORTED)
-    set_target_properties(apd-testutils PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "\${CMAKE_SYSROOT}/opt/include"
-    )
-endif()
-if(NOT TARGET apd::testutils)
-    add_library(apd::testutils ALIAS apd-testutils)
-endif()
-EOF
-}
+# do_install:append() {
+#     install -d ${D}/opt/lib/cmake/apd-testutils
+#     cat << EOF > ${D}/opt/lib/cmake/apd-testutils/apd-testutilsConfig.cmake
+# # apd-testutils CMake configuration file
+# if(NOT TARGET apd-testutils)
+#     add_library(apd-testutils INTERFACE IMPORTED)
+#     set_target_properties(apd-testutils PROPERTIES
+#         INTERFACE_INCLUDE_DIRECTORIES "\${CMAKE_SYSROOT}/opt/include"
+#     )
+# endif()
+# if(NOT TARGET apd::testutils)
+#     add_library(apd::testutils ALIAS apd-testutils)
+# endif()
+# EOF
+# }
 
 FILES:${PN} += " \
     /opt/lib/cmake/apd-testutils/* \

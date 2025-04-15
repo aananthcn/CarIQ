@@ -15,3 +15,5 @@ do_configure() {
 FILES:${PN} = " \
     /opt \
 "
+
+INSANE_SKIP:${PN} += "staticdev"

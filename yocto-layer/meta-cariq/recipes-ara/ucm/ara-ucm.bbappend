@@ -16,6 +16,17 @@ FILES:${PN} = " \
     /opt \
 "
 
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
+
+INSANE_SKIP:${PN} += "staticdev"
+
+
+
 # EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/ara-api"
 # FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/ara-api/:${THISDIR}/files/:"
 

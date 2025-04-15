@@ -1,12 +1,12 @@
-EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/ara-api"
-FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/ara-api/:"
+EXTERNALSRC := "${THISDIR}/../../../../yocto-shared/sample-applications"
+FILESEXTRAPATHS:prepend := "${THISDIR}/../../../../yocto-shared/sample-applications/:"
 
 DEPENDS += "apd-cmake-modules-native libe2e jansson"
 
-LIC_FILES_CHKSUM = "file://apd/wrsomeip/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
+LIC_FILES_CHKSUM = "file://clusters/LICENSE;md5=b64e97d3c7b53b1c5789d61baab7ee2e"
 
 do_configure() {
-    cmake -S ${S}/apd/wrsomeip -B ${B} \
+    cmake -S ${S}/clusters -B ${B} \
         -GNinja \
         -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
@@ -15,7 +15,12 @@ do_configure() {
 }
 
 FILES:${PN} += " \
-	/opt/bintest \
-    /opt/etc \
-    /opt/etc/wrsomeip \
+    /opt \
 "
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}

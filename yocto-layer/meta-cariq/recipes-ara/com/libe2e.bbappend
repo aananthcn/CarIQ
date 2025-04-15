@@ -14,26 +14,35 @@ do_configure() {
         -DCMAKE_PREFIX_PATH=${WORKDIR}/recipe-sysroot/usr
 }
 
-do_install:append() {
-    install -d ${D}${libdir}/cmake/e2e
-    cat << EOF > ${D}${libdir}/cmake/e2e/e2e-config.cmake
-# e2e CMake configuration file
-if(NOT TARGET e2e)
-    add_library(e2e SHARED IMPORTED)
-    set_target_properties(e2e PROPERTIES
-        IMPORTED_LOCATION "\${CMAKE_SYSROOT}/usr/lib/libe2e.so"
-        INTERFACE_INCLUDE_DIRECTORIES "\${CMAKE_SYSROOT}/usr/include"
-    )
-endif()
-EOF
-}
+# do_install:append() {
+#     install -d ${D}${libdir}/cmake/e2e
+#     cat << EOF > ${D}${libdir}/cmake/e2e/e2e-config.cmake
+# # e2e CMake configuration file
+# if(NOT TARGET e2e)
+#     add_library(e2e SHARED IMPORTED)
+#     set_target_properties(e2e PROPERTIES
+#         IMPORTED_LOCATION "\${CMAKE_SYSROOT}/usr/lib/libe2e.so"
+#         INTERFACE_INCLUDE_DIRECTORIES "\${CMAKE_SYSROOT}/usr/include"
+#     )
+# endif()
+# EOF
+# }
 
 # FILES:${PN}-dev += "${libdir}/cmake/e2e/e2e-config.cmake"
 
 # Override malformed EXTRA_OECMAKE
-EXTRA_OECMAKE = ""
+# EXTRA_OECMAKE = ""
 
 
 FILES:${PN} = " \
     /opt \
 "
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
+
+INSANE_SKIP:${PN} += "dev-so"
