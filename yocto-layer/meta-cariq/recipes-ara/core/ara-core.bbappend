@@ -11,6 +11,8 @@ do_configure() {
         -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src \
+        -DCMAKE_PREFIX_PATH="${WORKDIR}/recipe-sysroot/opt" \
+        -Dara-core_DIR="${WORKDIR}/recipe-sysroot/opt/lib/cmake/ara-core" \
         ${EXTRA_OECMAKE}
 }
 

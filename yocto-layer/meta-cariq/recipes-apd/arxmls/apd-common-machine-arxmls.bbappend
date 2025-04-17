@@ -18,3 +18,10 @@ do_configure() {
 FILES:${PN} = " \
     /opt \
 "
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}

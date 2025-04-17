@@ -18,33 +18,33 @@ do_configure:class-native() {
         -GNinja \
         -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot-native \
-        -DCMAKE_INCLUDE_PATH=${WORKDIR}/recipe-sysroot-native/usr/include \
+        -DCMAKE_INCLUDE_PATH=${WORKDIR}/recipe-sysroot-native/include \
         -DCMAKE_MODULE_PATH=${S}/apd/apd-cmake-modules/src
 }
 
-do_install() {
-    echo "DEBUG: Running custom do_install for apd-crc" >&2
-    install -d ${D}${libdir}
-    install -m 0644 ${B}/src/libapd_crc.a ${D}${libdir}/libapd_crc.a || echo "ERROR: Failed to install libapd_crc.a" >&2
+# do_install() {
+#     echo "DEBUG: Running custom do_install for apd-crc" >&2
+#     install -d ${D}/opt/lib/
+#     install -m 0644 ${B}/src/libapd_crc.a ${D}/opt/lib/libapd_crc.a || echo "ERROR: Failed to install libapd_crc.a" >&2
 
-    install -d ${D}${includedir}/apd/crc
-    install -m 0644 ${S}/apd/crc/include/public/apd/crc/*.h ${D}${includedir}/apd/crc/ || echo "ERROR: Failed to install headers" >&2
+#     # install -d ${D}${includedir}/apd/crc
+#     install -d ${D}/opt/include/apd/crc
+#     install -m 0644 ${S}/apd/crc/include/public/apd/crc/*.h ${D}/opt/include/apd/crc/ || echo "ERROR: Failed to install headers" >&2
 
-    install -d ${D}${libdir}/cmake/apd-crc
-    cat << EOF > ${D}${libdir}/cmake/apd-crc/apd-crcConfig.cmake
-# apd-crc CMake configuration file
-if(NOT TARGET apd_crc)
-    add_library(apd_crc STATIC IMPORTED)
-    set_target_properties(apd_crc PROPERTIES
-        IMPORTED_LOCATION "\${CMAKE_SYSROOT}/usr/lib/libapd_crc.a"
-        INTERFACE_INCLUDE_DIRECTORIES "\${CMAKE_SYSROOT}/usr/include"
-    )
-endif()
-if(NOT TARGET apd::crc)
-    add_library(apd::crc ALIAS apd_crc)
-endif()
-EOF
-}
+#     install -d ${D}/opt/lib/cmake/apd-crc
+#     cat << EOF > ${D}/opt/lib/cmake/apd-crc/apd-crcConfig.cmake
+# # apd-crc CMake configuration file
+# if(NOT TARGET apd_crc)
+#     add_library(apd_crc STATIC IMPORTED)
+#     set_target_properties(apd_crc PROPERTIES
+#         IMPORTED_LOCATION "\${CMAKE_SYSROOT}/opt/lib/libapd_crc.a"
+#     )
+# endif()
+# if(NOT TARGET apd::crc)
+#     add_library(apd::crc ALIAS apd_crc)
+# endif()
+# EOF
+# }
 
 # FILES:${PN} = " \
 #     ${libdir}/libapd_crc.a \
@@ -56,3 +56,12 @@ EOF
 FILES:${PN} = " \
     /opt \
 "
+
+INSANE_SKIP:${PN} += "staticdev"
+
+# Ensure /opt is staged to sysroot
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
