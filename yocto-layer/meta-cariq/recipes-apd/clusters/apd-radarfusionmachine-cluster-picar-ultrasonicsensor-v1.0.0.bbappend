@@ -23,7 +23,7 @@ do_configure() {
         -DCMAKE_INSTALL_PREFIX=/opt \
         -DCMAKE_SYSROOT=${WORKDIR}/recipe-sysroot \
         -DCMAKE_MODULE_PATH=${S}/../ara-api/apd/apd-cmake-modules/src \
-        -DCMAKE_PREFIX_PATH="${WORKDIR}/recipe-sysroot/opt:${WORKDIR}/recipe-sysroot-native/usr" \
+        -DCMAKE_PREFIX_PATH="${WORKDIR}/recipe-sysroot/opt:${WORKDIR}/recipe-sysroot/usr" \
         -Dara-gen_DIR="${TMPDIR}/sysroots-components/x86_64/ara-gen-native/usr/lib/cmake/ara-gen" \
         -DAPD_INTERFACES_ARXMLS_DIR="${WORKDIR}/recipe-sysroot/opt/share/apd-interfaces-arxmls" \
         -Dara-com_DIR="${WORKDIR}/recipe-sysroot/opt/lib/cmake/ara-com" \
@@ -48,6 +48,7 @@ do_configure() {
         -DApdPlatform_DIR="${WORKDIR}/recipe-sysroot/opt/lib/cmake/ApdPlatform" \
         -Dapd-radarfusionmachine-arxmls_DIR="${WORKDIR}/recipe-sysroot/opt/lib/cmake/apd-radarfusionmachine-arxmls" \
         -Dapd-interfaces-arxmls_DIR="${WORKDIR}/recipe-sysroot/opt/lib/cmake/apd-interfaces-arxmls" \
+        -DBoost_INCLUDE_DIR="${WORKDIR}/recipe-sysroot/usr/include" \
         ${EXTRA_OECMAKE}
 }
 

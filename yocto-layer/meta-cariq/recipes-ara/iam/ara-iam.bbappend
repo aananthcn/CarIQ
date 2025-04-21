@@ -14,4 +14,13 @@ do_configure() {
 
 FILES:${PN} = " \
     /opt \
+    /usr/run \
 "
+
+SYSROOT_DIRS += "/opt"
+
+do_install:prepend() {
+    install -d ${SYSROOT_DESTDIR}/opt
+}
+
+INSANE_SKIP:${PN} += "staticdev"
